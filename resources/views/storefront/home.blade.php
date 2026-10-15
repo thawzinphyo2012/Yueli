@@ -75,23 +75,6 @@
         </div>
     </div>
 
-    {{-- Manifesto --}}
-    <section class="section-shell relative border-b border-ink/8 bg-blush/50">
-        <div class="glow-orb-sky pointer-events-none absolute left-1/2 top-8 h-40 w-40 -translate-x-1/2 opacity-25"></div>
-        <div class="relative mx-auto max-w-3xl px-4 py-16 text-center sm:px-5 sm:py-24 lg:px-10 lg:py-32">
-            <div class="fade-up ornament mb-8">
-                <span class="ornament-mark text-sky">✦</span>
-            </div>
-            <p class="fade-up section-label justify-center">Manifesto</p>
-            <blockquote class="quote-frame panel-soft fade-up reveal-delay-1 mx-auto mt-6 px-5 py-8 font-serif text-2xl italic leading-snug text-ink sm:mt-8 sm:px-8 sm:py-10 sm:text-3xl md:px-12 md:text-4xl lg:text-5xl">
-                Not a catalogue — a journal of cloth, light, and feminine form.
-            </blockquote>
-            <div class="fade-up reveal-delay-2 ornament mt-12">
-                <span class="ornament-mark text-lg text-sky">❧</span>
-            </div>
-        </div>
-    </section>
-
     {{-- Campaign story --}}
     @if($campaign)
         @php $campaignCover = $campaign->coverUrl(); @endphp
