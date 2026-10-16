@@ -43,8 +43,7 @@
                     <nav class="hidden items-center gap-5 lg:flex lg:gap-6" aria-label="Primary">
                         <a href="{{ route('lookbook.index') }}" class="nav-link whitespace-nowrap text-ink {{ request()->routeIs('lookbook.*') ? 'nav-link-active' : '' }}">Lookbook</a>
                         <a href="{{ route('collections.index') }}" class="nav-link whitespace-nowrap text-ink {{ request()->routeIs('collections.*') ? 'nav-link-active' : '' }}">Collections</a>
-                        <a href="{{ route('portfolio.index') }}" class="nav-link whitespace-nowrap text-ink {{ request()->routeIs('portfolio.*') ? 'nav-link-active' : '' }}">Studio</a>
-                        <a href="{{ route('shop.index') }}" class="nav-link whitespace-nowrap text-ink {{ request()->routeIs('shop.*') ? 'nav-link-active' : '' }}">The Edit</a>
+                        <a href="{{ route('shop.index') }}" class="nav-link whitespace-nowrap text-ink {{ request()->routeIs('shop.*') ? 'nav-link-active' : '' }}">Shop</a>
                         <a href="{{ route('about') }}" class="nav-link whitespace-nowrap text-ink {{ request()->routeIs('about') ? 'nav-link-active' : '' }}">About</a>
                         <a href="{{ route('contact') }}" class="nav-link whitespace-nowrap text-ink {{ request()->routeIs('contact') ? 'nav-link-active' : '' }}">Contact</a>
                     </nav>
@@ -98,8 +97,7 @@
                 @foreach([
                     ['lookbook.index', 'lookbook.*', 'Lookbook'],
                     ['collections.index', 'collections.*', 'Collections'],
-                    ['portfolio.index', 'portfolio.*', 'Studio'],
-                    ['shop.index', 'shop.*', 'The Edit'],
+                    ['shop.index', 'shop.*', 'Shop'],
                     ['about', 'about', 'About'],
                     ['contact', 'contact', 'Contact'],
                 ] as [$route, $active, $label])
@@ -166,8 +164,7 @@
                     <ul class="space-y-3 text-[11px] uppercase tracking-[0.18em] text-porcelain/60">
                         <li><a href="{{ route('lookbook.index') }}" class="inline-flex min-h-10 items-center hover:text-rose">Lookbook</a></li>
                         <li><a href="{{ route('collections.index') }}" class="inline-flex min-h-10 items-center hover:text-rose">Collections</a></li>
-                        <li><a href="{{ route('portfolio.index') }}" class="inline-flex min-h-10 items-center hover:text-rose">Studio</a></li>
-                        <li><a href="{{ route('shop.index') }}" class="inline-flex min-h-10 items-center hover:text-rose">The Edit</a></li>
+                        <li><a href="{{ route('shop.index') }}" class="inline-flex min-h-10 items-center hover:text-rose">Shop</a></li>
                         <li><a href="{{ route('about') }}" class="inline-flex min-h-10 items-center hover:text-rose">About</a></li>
                         <li><a href="{{ route('contact') }}" class="inline-flex min-h-10 items-center hover:text-rose">Contact</a></li>
                     </ul>

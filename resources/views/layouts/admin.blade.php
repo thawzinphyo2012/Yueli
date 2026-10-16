@@ -1,6 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
+    <script>
+        (function () {
+            var saved = localStorage.getItem('yueli-admin-theme');
+            var theme = saved === 'dark' || saved === 'light'
+                ? saved
+                : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -10,31 +19,85 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
-        :root {
-            --ink: #0c0d0f;
-            --graphite: #16181c;
-            --slate: #1e2228;
-            --edge: #2a2f38;
-            --mist: #9aa3b2;
-            --paper: #e8eaed;
-            --accent: #c8a96e;
-            --danger: #c45c5c;
-            --ok: #5a9a6e;
+        html[data-theme="light"] {
+            --ink: #f6eef4;
+            --graphite: #ffffff;
+            --slate: #f8eef5;
+            --edge: #ead8e4;
+            --mist: #7d6876;
+            --paper: #24131f;
+            --accent: #e23d86;
+            --danger: #c23b4a;
+            --ok: #1b8a55;
+            --shadow: rgba(176, 72, 122, 0.28);
+            --sheen: rgba(255, 255, 255, 0.92);
+            --stage-a: #fff8fc;
+            --stage-b: #f4cfe2;
+            --stage-c: #efe4ff;
         }
+        html[data-theme="dark"] {
+            --ink: #110e16;
+            --graphite: #1c1724;
+            --slate: #2a2436;
+            --edge: #3d344c;
+            --mist: #b8a8c0;
+            --paper: #f8f2f6;
+            --accent: #fe70a3;
+            --danger: #ff8088;
+            --ok: #6dcea0;
+            --shadow: rgba(0, 0, 0, 0.55);
+            --sheen: rgba(255, 255, 255, 0.08);
+            --stage-a: #16111e;
+            --stage-b: #3a1630;
+            --stage-c: #1a1430;
+        }
+        html { font-size: 14.5px; }
         body { font-family: 'Syne', system-ui, sans-serif; }
+        .admin-stage {
+            background:
+                radial-gradient(900px 420px at 12% -10%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 60%),
+                radial-gradient(700px 380px at 100% 0%, color-mix(in srgb, var(--stage-c) 80%, transparent), transparent 55%),
+                linear-gradient(165deg, var(--stage-a), var(--stage-b) 48%, var(--ink));
+        }
+        .admin-sidebar {
+            background: linear-gradient(180deg, color-mix(in srgb, var(--graphite) 78%, white), var(--graphite));
+            box-shadow:
+                inset 1px 1px 0 var(--sheen),
+                16px 0 36px -22px var(--shadow);
+        }
+        .admin-topbar {
+            background: color-mix(in srgb, var(--graphite) 86%, transparent);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 10px 24px -18px var(--shadow), inset 0 1px 0 var(--sheen);
+        }
+        .admin-shell [class*="bg-[var(--graphite)]"] {
+            background: linear-gradient(160deg, color-mix(in srgb, var(--graphite) 82%, white), var(--graphite)) !important;
+            border-color: color-mix(in srgb, var(--edge) 80%, white) !important;
+            border-radius: 1.15rem !important;
+            box-shadow:
+                inset 0 1px 0 var(--sheen),
+                0 18px 0 -14px color-mix(in srgb, var(--accent) 18%, transparent),
+                0 22px 36px -22px var(--shadow);
+            transform: translateZ(0);
+        }
+        .admin-shell [class*="bg-[var(--graphite)]"]:hover {
+            transform: translateY(-2px);
+        }
         .font-display { font-family: 'Syne', system-ui, sans-serif; }
         .admin-input {
             width: 100%;
-            background: var(--ink);
+            background: color-mix(in srgb, var(--ink) 72%, var(--graphite));
             border: 1px solid var(--edge);
             color: var(--paper);
-            border-radius: 0.375rem;
-            padding: 0.5rem 0.75rem;
+            border-radius: 0.75rem;
+            padding: 0.55rem 0.8rem;
             font-size: 0.875rem;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--sheen);
         }
         .admin-input:focus {
             outline: none;
             border-color: var(--accent);
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08), 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
         }
         .admin-label {
             display: block;
@@ -49,16 +112,18 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: var(--accent);
-            color: var(--ink);
+            background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 78%, white), var(--accent));
+            color: #fff;
             font-weight: 700;
             font-size: 0.8125rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
+            padding: 0.55rem 1rem;
+            border-radius: 0.85rem;
             border: none;
             cursor: pointer;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 0 -4px color-mix(in srgb, var(--accent) 55%, #5a1030), 0 14px 22px -12px var(--shadow);
         }
-        .admin-btn:hover { filter: brightness(1.08); }
+        .admin-btn:hover { transform: translateY(-1px); }
+        .admin-btn:active { transform: translateY(1px); box-shadow: inset 0 2px 4px rgba(0,0,0,0.15); }
         .admin-btn-ghost {
             background: transparent;
             color: var(--mist);
@@ -97,23 +162,49 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.625rem 0.875rem;
-            border-radius: 0.375rem;
+            padding: 0.65rem 0.9rem;
+            border-radius: 0.9rem;
             color: var(--mist);
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 600;
             text-decoration: none;
         }
         .nav-link:hover { background: var(--slate); color: var(--paper); }
-        .nav-link.active { background: var(--slate); color: var(--accent); }
+        .nav-link.active {
+            background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 18%, var(--slate)), var(--slate));
+            color: var(--accent);
+            box-shadow: inset 0 1px 0 var(--sheen), 0 10px 16px -12px var(--shadow);
+        }
+        .theme-toggle {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 0.8rem;
+            border: 1px solid var(--edge);
+            background: linear-gradient(180deg, color-mix(in srgb, var(--graphite) 70%, white), var(--graphite));
+            color: var(--paper);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: inset 0 1px 0 var(--sheen), 0 8px 14px -10px var(--shadow);
+        }
+        [x-cloak] { display: none !important; }
         .nav-link i, .nav-link [data-lucide] { width: 1rem; height: 1rem; flex-shrink: 0; }
     </style>
 </head>
 <body
-    class="bg-[var(--ink)] text-[var(--paper)] antialiased"
-    x-data="{ sidebarOpen: false }"
+    class="admin-stage text-[var(--paper)] antialiased"
+    x-data="{
+        sidebarOpen: false,
+        theme: document.documentElement.getAttribute('data-theme') || 'light',
+        toggleTheme() {
+            this.theme = this.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', this.theme);
+            localStorage.setItem('yueli-admin-theme', this.theme);
+        }
+    }"
 >
-    <div class="min-h-screen flex">
+    <div class="admin-shell min-h-screen flex">
         {{-- Mobile overlay --}}
         <div
             x-show="sidebarOpen"
@@ -124,7 +215,7 @@
 
         {{-- Sidebar --}}
         <aside
-            class="fixed inset-y-0 left-0 z-40 w-64 bg-[var(--graphite)] border-r border-[var(--edge)] flex flex-col transform transition-transform duration-200 lg:translate-x-0 lg:static"
+            class="admin-sidebar fixed inset-y-0 left-0 z-40 w-64 border-r border-[var(--edge)] flex flex-col transform transition-transform duration-200 lg:translate-x-0 lg:static lg:m-3 lg:rounded-[1.4rem] lg:border"
             :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
         >
             <div class="h-14 px-5 flex items-center border-b border-[var(--edge)] shrink-0">
@@ -170,7 +261,7 @@
 
         {{-- Main --}}
         <div class="flex-1 flex flex-col min-w-0">
-            <header class="h-14 bg-[var(--graphite)] border-b border-[var(--edge)] flex items-center justify-between px-4 lg:px-6 shrink-0">
+            <header class="admin-topbar h-16 mx-3 mt-3 rounded-[1.2rem] border border-[var(--edge)] flex items-center justify-between px-4 lg:px-6 shrink-0">
                 <button
                     type="button"
                     class="lg:hidden p-2 rounded text-[var(--mist)] hover:text-[var(--paper)] hover:bg-[var(--slate)]"
@@ -185,6 +276,10 @@
                 </div>
 
                 <div class="flex items-center gap-3 ml-auto">
+                    <button type="button" class="theme-toggle" @click="toggleTheme()" :aria-label="theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'">
+                        <span x-show="theme === 'dark'" x-cloak class="inline-flex"><i data-lucide="sun" class="w-4 h-4"></i></span>
+                        <span x-show="theme !== 'dark'" class="inline-flex"><i data-lucide="moon" class="w-4 h-4"></i></span>
+                    </button>
                     <a href="{{ route('home') }}" target="_blank" class="text-xs text-[var(--mist)] hover:text-[var(--accent)] inline-flex items-center gap-1.5">
                         <i data-lucide="external-link" class="w-3.5 h-3.5"></i> Storefront
                     </a>

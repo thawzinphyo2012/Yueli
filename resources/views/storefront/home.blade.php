@@ -1,4 +1,4 @@
-@extends('layouts.storefront')
+﻿@extends('layouts.storefront')
 
 @section('title', ($siteName ?? 'Yueli Studio').' — Editorial Fashion')
 
@@ -75,35 +75,51 @@
         </div>
     </div>
 
-    {{-- Campaign story --}}
-    @if($campaign)
-        @php $campaignCover = $campaign->coverUrl(); @endphp
-        <section class="relative min-h-[85vh] overflow-hidden bg-plum text-porcelain">
-            @if($campaignCover)
-                <img src="{{ $campaignCover }}" alt="{{ $campaign->title }}" class="absolute inset-0 h-full w-full object-cover opacity-75">
-                <div class="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/40 to-transparent"></div>
-            @endif
-            <div class="hero-sparks opacity-50" aria-hidden="true"></div>
-            <div class="glow-orb right-[10%] top-[20%] h-56 w-56 opacity-40"></div>
-            <div class="relative z-10 mx-auto grid min-h-[85vh] max-w-[90rem] items-end gap-10 px-5 py-20 lg:grid-cols-12 lg:px-10">
-                <div class="fade-up lg:col-span-6">
-                    <p class="section-label text-rose">Campaign story</p>
-                    <h2 class="mt-5 font-serif text-5xl italic leading-tight md:text-6xl">{{ $campaign->title }}</h2>
-                    @if($campaign->description)
-                        <p class="mt-6 max-w-md font-serif text-lg leading-relaxed text-porcelain/70">
-                            {{ \Illuminate\Support\Str::limit(strip_tags($campaign->description), 180) }}
-                        </p>
-                    @endif
-                    <a href="{{ route('lookbook.show', $campaign) }}" class="btn-outline mt-10">Open campaign</a>
+    {{-- Shop --}}
+    @if($products->isNotEmpty())
+        <section class="relative overflow-hidden border-b border-ink/8 bg-blush/60">
+            <div class="pointer-events-none absolute inset-0 opacity-50" style="background-image: radial-gradient(ellipse at 20% 0%, rgba(254,112,163,0.16), transparent 45%), radial-gradient(ellipse at 90% 100%, rgba(247,162,197,0.2), transparent 40%);"></div>
+            <div class="glow-orb-sky pointer-events-none absolute -right-16 top-24 h-64 w-64 opacity-20"></div>
+            <div class="relative mx-auto max-w-[90rem] px-5 py-24 lg:px-10 lg:py-28">
+                <div class="fade-up ornament mb-10">
+                    <span class="ornament-mark text-sky">✦</span>
                 </div>
-                <div class="fade-up reveal-delay-2 hidden self-center lg:col-span-5 lg:col-start-8 lg:block">
-                    <div class="rounded-[28px] border border-soft/25 bg-porcelain/10 p-8 shadow-[0_28px_56px_-18px_rgba(254,112,163,0.45)] backdrop-blur-md">
-                        <p class="font-serif text-8xl italic text-sky/30">01</p>
-                        <div class="editorial-rule mt-4 bg-sky"></div>
-                        <p class="mt-6 text-[10px] uppercase tracking-[0.28em] text-porcelain/55">
-                            {{ collect([$campaign->photographer, $campaign->location])->filter()->implode(' · ') ?: 'Editorial photography' }}
+                <div class="fade-up mb-6 flex flex-col gap-6 lg:mb-14 lg:flex-row lg:items-end lg:justify-between">
+                    <div class="max-w-xl">
+                        <p class="section-label">Boutique</p>
+                        <h2 class="mt-4 font-serif text-5xl italic text-ink md:text-6xl">Shop</h2>
+                        <p class="mt-5 font-serif text-xl leading-relaxed text-ink/60">
+                            Pieces from the house — select, bag, and wear with ease.
                         </p>
                     </div>
+                    <a href="{{ route('shop.index') }}" class="btn-ghost shrink-0">Shop all pieces</a>
+                </div>
+
+                <div class="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+                    @foreach($products as $index => $product)
+                        <a href="{{ route('shop.show', $product) }}" class="reveal product-box group {{ 'reveal-delay-'.(($index % 4) + 1) }}">
+                            <div class="product-box-media media-frame aspect-[3/4]">
+                                @if($product->is_featured)
+                                    <span class="product-box-tag">Featured</span>
+                                @endif
+                                @if($product->imageUrl())
+                                    <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="img-editorial">
+                                @endif
+                            </div>
+                            <div class="product-box-body">
+                                @if($product->collection)
+                                    <p class="text-[10px] uppercase tracking-[0.22em] text-mist">{{ $product->collection->name }}</p>
+                                @endif
+                                <div class="product-box-meta">
+                                    <h3 class="font-serif text-2xl italic leading-tight text-ink transition group-hover:text-rose">{{ $product->name }}</h3>
+                                    <p class="shrink-0 pt-1 text-[12px] tracking-[0.08em] text-ink">${{ number_format($product->price, 2) }}</p>
+                                </div>
+                                @if($product->short_description)
+                                    <p class="text-sm leading-relaxed text-mist">{{ \Illuminate\Support\Str::limit($product->short_description, 56) }}</p>
+                                @endif
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -157,56 +173,6 @@
                         @endif
                     </a>
                 @endforeach
-            </div>
-        </section>
-    @endif
-
-    {{-- The Edit --}}
-    @if($products->isNotEmpty())
-        <section class="relative overflow-hidden border-y border-ink/8 bg-blush/60">
-            <div class="pointer-events-none absolute inset-0 opacity-50" style="background-image: radial-gradient(ellipse at 20% 0%, rgba(254,112,163,0.16), transparent 45%), radial-gradient(ellipse at 90% 100%, rgba(247,162,197,0.2), transparent 40%);"></div>
-            <div class="glow-orb-sky pointer-events-none absolute -right-16 top-24 h-64 w-64 opacity-20"></div>
-            <div class="relative mx-auto max-w-[90rem] px-5 py-24 lg:px-10 lg:py-28">
-                <div class="fade-up ornament mb-10">
-                    <span class="ornament-mark text-sky">✦</span>
-                </div>
-                <div class="fade-up mb-6 flex flex-col gap-6 lg:mb-14 lg:flex-row lg:items-end lg:justify-between">
-                    <div class="max-w-xl">
-                        <p class="section-label">Boutique</p>
-                        <h2 class="mt-4 font-serif text-5xl italic text-ink md:text-6xl">The Edit</h2>
-                        <p class="mt-5 font-serif text-xl leading-relaxed text-ink/60">
-                            Shop the pieces from the pages — easy to choose, quiet to wear.
-                        </p>
-                    </div>
-                    <a href="{{ route('shop.index') }}" class="btn-ghost shrink-0">Shop all pieces</a>
-                </div>
-
-                <div class="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-                    @foreach($products as $index => $product)
-                        <a href="{{ route('shop.show', $product) }}" class="reveal product-box group {{ 'reveal-delay-'.(($index % 4) + 1) }}">
-                            <div class="product-box-media media-frame aspect-[3/4]">
-                                @if($product->is_featured)
-                                    <span class="product-box-tag">Featured</span>
-                                @endif
-                                @if($product->imageUrl())
-                                    <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="img-editorial">
-                                @endif
-                            </div>
-                            <div class="product-box-body">
-                                @if($product->collection)
-                                    <p class="text-[10px] uppercase tracking-[0.22em] text-mist">{{ $product->collection->name }}</p>
-                                @endif
-                                <div class="product-box-meta">
-                                    <h3 class="font-serif text-2xl italic leading-tight text-ink transition group-hover:text-rose">{{ $product->name }}</h3>
-                                    <p class="shrink-0 pt-1 text-[12px] tracking-[0.08em] text-ink">${{ number_format($product->price, 2) }}</p>
-                                </div>
-                                @if($product->short_description)
-                                    <p class="text-sm leading-relaxed text-mist">{{ \Illuminate\Support\Str::limit($product->short_description, 56) }}</p>
-                                @endif
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
             </div>
         </section>
     @endif
@@ -299,22 +265,34 @@
                         <h3 class="mt-3 font-serif text-3xl italic md:text-4xl lg:text-5xl">Frames from the studies</h3>
                         <p class="mt-3 max-w-md font-serif text-base text-porcelain/55">A moving strip of fittings, stills, and campaign light.</p>
                     </div>
-                    <p class="text-[10px] uppercase tracking-[0.2em] text-soft">Scroll →</p>
                 </div>
-                <div class="studio-reel relative flex gap-4 overflow-x-auto px-5 pb-6 lg:gap-5 lg:px-10" style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
-                    @foreach($filmFrames as $index => $image)
-                        @php
-                            $url = str_starts_with($image, 'http') ? $image : asset('storage/'.$image);
-                        @endphp
-                        <figure class="group relative h-72 w-[70vw] shrink-0 overflow-hidden rounded-[20px] shadow-[0_20px_48px_-16px_rgba(254,112,163,0.5)] ring-1 ring-primary/20 sm:h-80 sm:w-[42vw] md:w-[28vw] lg:h-[22rem] lg:w-[22vw]" style="scroll-snap-align: start;">
-                            <img src="{{ $url }}" alt="Studio frame {{ $index + 1 }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]">
-                            <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-80"></div>
-                            <span class="absolute bottom-4 left-4 font-display text-3xl italic text-primary">
-                                {{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}
-                            </span>
-                            <span class="absolute bottom-5 right-4 text-[9px] uppercase tracking-[0.22em] text-porcelain/60">Frame</span>
-                        </figure>
+                <style>
+                    .studio-reel-track { animation: studio-reel-move 42s linear infinite; }
+                    @keyframes studio-reel-move {
+                        from { transform: translateX(0); }
+                        to { transform: translateX(-50%); }
+                    }
+                </style>
+                <div class="studio-reel pointer-events-none relative touch-none overflow-hidden pb-6 select-none" aria-hidden="true">
+                    <div class="studio-reel-track flex w-max">
+                    @foreach(range(1, 2) as $copy)
+                        <div class="flex shrink-0 gap-4 pr-4 lg:gap-5 lg:pr-5">
+                            @foreach($filmFrames as $index => $image)
+                                @php
+                                    $url = str_starts_with($image, 'http') ? $image : asset('storage/'.$image);
+                                @endphp
+                                <figure class="group relative h-72 w-[70vw] shrink-0 overflow-hidden rounded-[20px] shadow-[0_20px_48px_-16px_rgba(254,112,163,0.5)] ring-1 ring-primary/20 sm:h-80 sm:w-[42vw] md:w-[28vw] lg:h-[22rem] lg:w-[22vw]" @if($copy === 2) aria-hidden="true" @endif>
+                                    <img src="{{ $url }}" alt="{{ $copy === 1 ? 'Studio frame '.($index + 1) : '' }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-80"></div>
+                                    <span class="absolute bottom-4 left-4 font-display text-3xl italic text-primary">
+                                        {{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}
+                                    </span>
+                                    <span class="absolute bottom-5 right-4 text-[9px] uppercase tracking-[0.22em] text-porcelain/60">Frame</span>
+                                </figure>
+                            @endforeach
+                        </div>
                     @endforeach
+                    </div>
                 </div>
             </section>
         @endif

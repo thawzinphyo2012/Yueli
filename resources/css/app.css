@@ -263,18 +263,13 @@
         opacity: 0.7;
     }
 
-    .studio-reel {
-        scrollbar-width: thin;
-        scrollbar-color: color-mix(in srgb, var(--color-sky) 50%, transparent) transparent;
+    .studio-reel-track {
+        animation: studio-reel-move 42s linear infinite;
     }
 
-    .studio-reel::-webkit-scrollbar {
-        height: 4px;
-    }
-
-    .studio-reel::-webkit-scrollbar-thumb {
-        background: color-mix(in srgb, var(--color-sky) 55%, transparent);
-        border-radius: 999px;
+    @keyframes studio-reel-move {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
     }
 
     @media (min-width: 1024px) {
