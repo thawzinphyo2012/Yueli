@@ -17,10 +17,10 @@
                     <ul class="divide-y divide-ink/10">
                         @foreach($items as $key => $item)
                             <li class="reveal flex flex-col gap-6 py-8 first:pt-0 sm:flex-row sm:items-start">
-                                <a href="{{ route('shop.show', $item['slug']) }}" class="block w-full shrink-0 overflow-hidden bg-ink/5 sm:w-28">
+                                <a href="{{ route('shop.show', $item['slug']) }}" class="block w-full shrink-0 overflow-hidden rounded-[16px] bg-ink/5 sm:w-28">
                                     <div class="aspect-[3/4]">
                                         @if(!empty($item['image']))
-                                            <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" class="h-full w-full object-cover">
+                                            <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}" class="h-full w-full rounded-[16px] object-cover">
                                         @else
                                             <div class="flex h-full w-full items-center justify-center text-ink/20">
                                                 <i data-lucide="shirt" class="h-6 w-6"></i>

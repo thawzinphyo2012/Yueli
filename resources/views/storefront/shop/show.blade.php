@@ -11,9 +11,9 @@
 
     <section class="mx-auto max-w-7xl px-5 py-12 lg:grid lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-20">
         <div class="reveal space-y-4">
-            <div class="aspect-[3/4] overflow-hidden bg-ink/5">
+            <div class="aspect-[3/4] overflow-hidden rounded-[22px] bg-ink/5">
                 @if($product->imageUrl())
-                    <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="h-full w-full object-cover">
+                    <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="h-full w-full rounded-[22px] object-cover">
                 @else
                     <div class="flex h-full w-full items-center justify-center text-ink/20">
                         <i data-lucide="shirt" class="h-14 w-14"></i>
@@ -26,8 +26,8 @@
                         @php
                             $url = str_starts_with($image, 'http') ? $image : asset('storage/'.$image);
                         @endphp
-                        <div class="aspect-square overflow-hidden bg-ink/5">
-                            <img src="{{ $url }}" alt="{{ $product->name }}" class="h-full w-full object-cover">
+                        <div class="aspect-square overflow-hidden rounded-[18px] bg-ink/5">
+                            <img src="{{ $url }}" alt="{{ $product->name }}" class="h-full w-full rounded-[18px] object-cover">
                         </div>
                     @endforeach
                 </div>
@@ -125,9 +125,9 @@
                 <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                     @foreach($related as $index => $item)
                         <a href="{{ route('shop.show', $item) }}" class="reveal group block {{ 'reveal-delay-'.(($index % 4) + 1) }}">
-                            <div class="aspect-[3/4] overflow-hidden bg-ink/5">
+                            <div class="aspect-[3/4] overflow-hidden rounded-[20px] bg-ink/5">
                                 @if($item->imageUrl())
-                                    <img src="{{ $item->imageUrl() }}" alt="{{ $item->name }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]">
+                                    <img src="{{ $item->imageUrl() }}" alt="{{ $item->name }}" class="h-full w-full rounded-[20px] object-cover transition duration-700 group-hover:scale-[1.04]">
                                 @endif
                             </div>
                             <h3 class="mt-4 font-serif text-xl text-ink transition group-hover:text-petrol">{{ $item->name }}</h3>

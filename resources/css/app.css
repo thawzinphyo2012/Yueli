@@ -32,9 +32,11 @@
 
 @layer base {
     :root {
-        /* Primary pink RGB for soft shadows / glows */
+        /* Brand pink glow + solid blue shadows */
         --shadow-brand: 254, 112, 163;
-        --shadow-blue: 254, 112, 163;
+        --shadow-blue: 59, 130, 246;
+        --solid-blue: #3b82f6;
+        --solid-blue-soft: #dbeafe;
     }
 
     html {
@@ -78,6 +80,14 @@
 
     img {
         @apply max-w-full;
+        border-radius: 1.15rem;
+    }
+
+    img.ken-burns,
+    .grain > img,
+    .grain .absolute > img,
+    section.grain img {
+        border-radius: 0;
     }
 }
 
@@ -173,7 +183,8 @@
 
     .ornament-mark {
         font-family: var(--font-serif);
-        @apply text-2xl italic leading-none;
+        @apply inline-block text-2xl italic leading-none;
+        animation: ornamentPulse 3.8s ease-in-out infinite;
     }
 
     .section-shell {
@@ -193,22 +204,27 @@
     }
 
     .soft-shadow {
+        border: 1px solid color-mix(in srgb, var(--solid-blue) 28%, transparent);
+        background: var(--color-porcelain);
         box-shadow:
-            0 14px 34px -14px rgba(var(--shadow-blue), 0.38),
-            0 4px 12px -6px rgba(var(--shadow-blue), 0.18);
+            0 14px 34px -12px rgba(var(--shadow-blue), 0.42),
+            0 4px 12px -4px rgba(var(--shadow-blue), 0.22);
     }
 
     .soft-shadow-lg {
+        border: 1px solid color-mix(in srgb, var(--solid-blue) 32%, transparent);
+        background: var(--color-porcelain);
         box-shadow:
-            0 24px 52px -16px rgba(var(--shadow-blue), 0.42),
-            0 8px 18px -8px rgba(var(--shadow-blue), 0.22);
+            0 24px 52px -14px rgba(var(--shadow-blue), 0.48),
+            0 8px 18px -6px rgba(var(--shadow-blue), 0.26);
     }
 
     .panel-soft {
-        @apply rounded-[24px] border border-sky/15 bg-porcelain/90;
+        @apply rounded-[24px] bg-porcelain;
+        border: 1px solid color-mix(in srgb, var(--solid-blue) 30%, transparent);
         box-shadow:
-            0 18px 42px -18px rgba(var(--shadow-blue), 0.35),
-            0 4px 14px -6px rgba(var(--shadow-blue), 0.16);
+            0 18px 42px -14px rgba(var(--shadow-blue), 0.4),
+            0 4px 14px -4px rgba(var(--shadow-blue), 0.2);
     }
 
     .corner-frame {
@@ -264,12 +280,60 @@
     }
 
     .studio-reel-track {
-        animation: studio-reel-move 42s linear infinite;
+        animation: studio-reel-move 36s linear infinite;
     }
 
     @keyframes studio-reel-move {
         from { transform: translateX(0); }
         to { transform: translateX(-50%); }
+    }
+
+    @keyframes ornamentPulse {
+        0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.75; }
+        50% { transform: scale(1.12) rotate(8deg); opacity: 1; }
+    }
+
+    @keyframes accentBreathe {
+        0%, 100% { opacity: 0.88; transform: translateY(0); }
+        50% { opacity: 1; transform: translateY(-2px); }
+    }
+
+    .page-enter {
+        animation: pageEnter 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes pageEnter {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: none; }
+    }
+
+    .stagger-children > .reveal,
+    .stagger-children > .fade-up,
+    .stagger-children > .scale-in,
+    .stagger-children > .clip-up,
+    .stagger-children > .product-card,
+    .stagger-children > article {
+        --stagger-i: 0;
+        transition-delay: calc(var(--stagger-i) * 90ms);
+    }
+
+    .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 80;
+        height: 2px;
+        width: 100%;
+        pointer-events: none;
+        background: transparent;
+    }
+
+    .scroll-progress > span {
+        display: block;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--color-primary), var(--color-soft));
+        transition: width 0.05s linear;
     }
 
     @media (min-width: 1024px) {
@@ -347,11 +411,29 @@
     }
 
     .nav-link {
-        @apply inline-flex min-h-10 items-center text-[10px] font-medium uppercase tracking-[0.22em] text-ink transition hover:text-rose;
+        @apply relative inline-flex min-h-10 items-center text-[10px] font-medium uppercase tracking-[0.22em] text-ink transition hover:text-rose;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0.35rem;
+        height: 1px;
+        background: var(--color-primary);
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .nav-link:hover::after,
+    .nav-link-active::after {
+        transform: scaleX(1);
     }
 
     .nav-link-active {
-        @apply text-ink;
+        @apply text-primary;
     }
 
     .masthead-brand {
@@ -373,7 +455,7 @@
     }
 
     .img-editorial {
-        @apply h-full w-full object-cover transition duration-[1.2s] ease-out;
+        @apply h-full w-full rounded-[22px] object-cover transition duration-[1.2s] ease-out;
         will-change: transform, filter;
     }
 
@@ -458,6 +540,8 @@
     font-style: italic;
     color: var(--color-rose);
     font-weight: 500;
+    display: inline-block;
+    animation: accentBreathe 4.5s ease-in-out infinite;
 }
 
 .hero-sparks {
@@ -575,37 +659,45 @@
 }
 
 .product-box:hover {
-    transform: translateY(-6px);
+    transform: translateY(-8px);
+}
+
+.product-box:hover .img-editorial {
+    transform: scale(1.08);
 }
 
 .product-box .product-box-media {
     @apply relative overflow-hidden rounded-[22px] bg-blush;
+    border: 1px solid color-mix(in srgb, var(--solid-blue) 35%, transparent);
     box-shadow:
-        0 16px 40px -14px rgba(var(--shadow-blue), 0.42),
-        0 6px 16px -6px rgba(var(--shadow-blue), 0.2),
-        0 0 0 1px rgba(var(--shadow-blue), 0.08);
-    transition: box-shadow 0.7s ease;
+        0 16px 40px -12px rgba(var(--shadow-blue), 0.48),
+        0 6px 16px -4px rgba(var(--shadow-blue), 0.26),
+        0 0 0 1px rgba(var(--shadow-blue), 0.12);
+    transition: box-shadow 0.7s ease, border-color 0.4s ease;
 }
 
 .product-box:hover .product-box-media {
+    border-color: color-mix(in srgb, var(--solid-blue) 55%, transparent);
     box-shadow:
-        0 28px 56px -14px rgba(var(--shadow-blue), 0.5),
-        0 10px 22px -6px rgba(var(--shadow-brand), 0.35),
-        0 0 0 1px rgba(var(--shadow-brand), 0.2);
+        0 28px 56px -12px rgba(var(--shadow-blue), 0.55),
+        0 10px 22px -4px rgba(var(--shadow-blue), 0.32),
+        0 0 0 1px rgba(var(--shadow-blue), 0.22);
 }
 
 .img-card {
     @apply overflow-hidden rounded-[22px] bg-blush;
+    border: 1px solid color-mix(in srgb, var(--solid-blue) 32%, transparent);
     box-shadow:
-        0 16px 40px -14px rgba(var(--shadow-blue), 0.4),
-        0 4px 14px -4px rgba(var(--shadow-blue), 0.18);
-    transition: box-shadow 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        0 16px 40px -12px rgba(var(--shadow-blue), 0.45),
+        0 4px 14px -4px rgba(var(--shadow-blue), 0.22);
+    transition: box-shadow 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease;
 }
 
 .img-card:hover {
+    border-color: color-mix(in srgb, var(--solid-blue) 50%, transparent);
     box-shadow:
-        0 28px 54px -14px rgba(var(--shadow-blue), 0.5),
-        0 8px 20px -6px rgba(var(--shadow-brand), 0.28);
+        0 28px 54px -12px rgba(var(--shadow-blue), 0.52),
+        0 8px 20px -4px rgba(var(--shadow-blue), 0.3);
 }
 
 .product-box .product-box-tag {
@@ -640,6 +732,37 @@
         inset: 0.75rem;
         border-radius: 1rem;
     }
+
+    /* Keep photos compact on mobile */
+    .product-box .product-box-media,
+    .img-card,
+    .media-frame {
+        max-height: 15.5rem;
+    }
+
+    .product-box .product-box-media.aspect-\[3\/4\],
+    .img-card.aspect-\[3\/4\],
+    .media-frame.aspect-\[3\/4\] {
+        aspect-ratio: 4 / 5;
+        max-height: 15.5rem;
+    }
+
+    .studio-reel figure {
+        height: 14.5rem !important;
+        width: 58vw !important;
+        max-width: 15rem;
+        border: 1px solid color-mix(in srgb, var(--solid-blue) 40%, transparent);
+        box-shadow: 0 14px 32px -12px rgba(var(--shadow-blue), 0.45);
+    }
+
+    .pantry-shop .product-card__media {
+        max-height: 14rem;
+        aspect-ratio: 1 / 1.05;
+    }
+
+    img:not(.ken-burns) {
+        border-radius: 0.95rem;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -656,7 +779,12 @@
     .hero-sparks,
     .header-enter,
     .editorial-rule,
-    .marquee-track {
+    .marquee-track,
+    .studio-reel-track,
+    .ornament-mark,
+    .hero-accent,
+    .page-enter,
+    .scroll-progress > span {
         animation: none !important;
         opacity: 1;
         transform: none;
@@ -665,7 +793,8 @@
     }
 
     .group:hover .img-editorial,
-    .lift-card:hover {
+    .lift-card:hover,
+    .product-box:hover {
         transform: none;
         filter: none;
         box-shadow: none;
@@ -675,6 +804,10 @@
     .btn-rose::after,
     .btn-ghost::after,
     .btn-outline::after {
+        display: none;
+    }
+
+    .scroll-progress {
         display: none;
     }
 }

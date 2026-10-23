@@ -24,6 +24,8 @@
         Skip to content
     </a>
 
+    <div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
+
     {{-- Magazine masthead --}}
     <header class="header-enter site-header sticky top-0 z-50 border-b border-ink/8 bg-porcelain/85 backdrop-blur-md">
         <div class="mx-auto max-w-[90rem] px-4 sm:px-5 lg:px-10">
@@ -141,7 +143,7 @@
         </div>
     @endif
 
-    <main id="main" class="overflow-x-hidden">
+    <main id="main" class="page-enter overflow-x-hidden">
         @yield('content')
     </main>
 

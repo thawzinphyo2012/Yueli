@@ -18,7 +18,9 @@
     {{-- Cover — Harvest-style cinematic hero --}}
     <section class="grain relative min-h-[100svh] w-full overflow-hidden bg-ink text-porcelain">
         @if($heroImage)
-            <img src="{{ $heroImage }}" alt="" class="ken-burns absolute inset-0 h-full w-full scale-105 object-cover">
+            <div class="absolute inset-0 overflow-hidden" data-parallax="0.06">
+                <img src="{{ $heroImage }}" alt="" class="ken-burns absolute inset-0 h-full w-full scale-105 object-cover">
+            </div>
             <div class="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/55 to-ink/20"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-ink/30"></div>
         @else
@@ -26,7 +28,7 @@
         @endif
 
         <div class="hero-sparks" aria-hidden="true"></div>
-        <div class="deco-dots" aria-hidden="true"></div>
+        <div class="deco-dots float-soft" aria-hidden="true"></div>
         <div class="glow-orb -right-8 top-1/3 h-72 w-72 opacity-50"></div>
         <div class="glow-orb-sky bottom-1/4 left-[6%] h-52 w-52 opacity-45" style="animation-delay: 1.2s"></div>
         <div class="glow-orb-sky right-[18%] bottom-[12%] h-36 w-36 opacity-35" style="animation-delay: 2s"></div>
@@ -89,15 +91,16 @@
                         <p class="section-label">Boutique</p>
                         <h2 class="mt-4 font-serif text-5xl italic text-ink md:text-6xl">Shop</h2>
                         <p class="mt-5 font-serif text-xl leading-relaxed text-ink/60">
-                            Pieces from the house — select, bag, and wear with ease.
+                            Soft tees and quiet staples from the atelier — select a piece, bag it, and wear it with ease.
+                            Clean lines, calm color, and cloth that feels light on the body.
                         </p>
                     </div>
                     <a href="{{ route('shop.index') }}" class="btn-ghost shrink-0">Shop all pieces</a>
                 </div>
 
-                <div class="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="stagger-children grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
                     @foreach($products as $index => $product)
-                        <a href="{{ route('shop.show', $product) }}" class="reveal product-box group {{ 'reveal-delay-'.(($index % 4) + 1) }}">
+                        <a href="{{ route('shop.show', $product) }}" class="reveal product-box group">
                             <div class="product-box-media media-frame aspect-[3/4]">
                                 @if($product->is_featured)
                                     <span class="product-box-tag">Featured</span>
@@ -141,7 +144,7 @@
                 </a>
             </div>
 
-            <div class="mx-auto grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+            <div class="stagger-children mx-auto grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
                 @foreach($collections as $index => $collection)
                     @php
                         $cover = $collection->cover_image
@@ -231,7 +234,7 @@
                                     {{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}
                                 </span>
                                 @if($project->coverUrl())
-                                    <span class="hidden h-16 w-12 shrink-0 overflow-hidden rounded-[12px] shadow-[0_10px_24px_-10px_rgba(254,112,163,0.45)] sm:block md:h-20 md:w-14">
+                                    <span class="hidden h-16 w-12 shrink-0 overflow-hidden rounded-[12px] border border-[rgba(59,130,246,0.28)] shadow-[0_10px_24px_-10px_rgba(59,130,246,0.42)] sm:block md:h-20 md:w-14">
                                         <img src="{{ $project->coverUrl() }}" alt="" class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
                                     </span>
                                 @endif
@@ -281,7 +284,7 @@
                                 @php
                                     $url = str_starts_with($image, 'http') ? $image : asset('storage/'.$image);
                                 @endphp
-                                <figure class="group relative h-72 w-[70vw] shrink-0 overflow-hidden rounded-[20px] shadow-[0_20px_48px_-16px_rgba(254,112,163,0.5)] ring-1 ring-primary/20 sm:h-80 sm:w-[42vw] md:w-[28vw] lg:h-[22rem] lg:w-[22vw]" @if($copy === 2) aria-hidden="true" @endif>
+                                <figure class="group relative h-72 w-[70vw] shrink-0 overflow-hidden rounded-[20px] border border-[rgba(59,130,246,0.35)] shadow-[0_20px_48px_-14px_rgba(59,130,246,0.48)] sm:h-80 sm:w-[42vw] md:w-[28vw] lg:h-[22rem] lg:w-[22vw]" @if($copy === 2) aria-hidden="true" @endif>
                                     <img src="{{ $url }}" alt="{{ $copy === 1 ? 'Studio frame '.($index + 1) : '' }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]">
                                     <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-80"></div>
                                     <span class="absolute bottom-4 left-4 font-display text-3xl italic text-primary">
@@ -343,11 +346,11 @@
                     </div>
                 </div>
 
-                <div class="relative mx-auto grid max-w-[90rem] items-center gap-8 px-5 pb-10 lg:grid-cols-12 lg:gap-12 lg:px-10 lg:pb-14">
+                <div class="relative mx-auto grid max-w-[90rem] items-center gap-8 px-5 pb-16 lg:grid-cols-12 lg:gap-12 lg:px-10 lg:pb-20">
                     <div class="mx-auto w-full max-w-md lg:col-span-5 lg:mx-0 lg:max-w-lg">
                         <div class="relative">
                             <div class="pointer-events-none absolute -inset-3 rounded-[28px] border border-primary/20" aria-hidden="true"></div>
-                            <div class="img-card relative aspect-[3/4] overflow-hidden rounded-[22px] shadow-[0_24px_50px_-16px_rgba(254,112,163,0.45)]">
+                            <div class="img-card relative aspect-[3/4] overflow-hidden rounded-[22px]">
                                 <template x-for="(slide, index) in slides" :key="index">
                                     <img
                                         :src="slide"
@@ -389,23 +392,6 @@
                         <a href="{{ route('portfolio.show', $deep) }}" class="btn-rose mt-10 w-fit">Read full study</a>
                     </div>
                 </div>
-
-                @if(count($deepSlides) > 1)
-                    <div class="relative mx-auto grid max-w-5xl grid-cols-2 gap-3 px-5 pb-16 sm:grid-cols-4 sm:gap-4 lg:px-10 lg:pb-20">
-                        <template x-for="(slide, index) in slides" :key="'thumb-' + index">
-                            <button
-                                type="button"
-                                class="img-card group aspect-[3/4] overflow-hidden rounded-[18px] ring-offset-2 ring-offset-soft/25 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                                :class="active === index ? 'ring-2 ring-primary' : 'ring-0 opacity-80 hover:opacity-100'"
-                                @click="go(index)"
-                                :aria-label="'Show image ' + (index + 1)"
-                                :aria-pressed="active === index"
-                            >
-                                <img :src="slide" :alt="'{{ addslashes($deep->title) }} thumb ' + (index + 1)" class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]">
-                            </button>
-                        </template>
-                    </div>
-                @endif
             </section>
         @endif
 
@@ -445,7 +431,7 @@
             <div class="deco-dots opacity-40" aria-hidden="true"></div>
             <div class="relative mx-auto grid max-w-[90rem] items-center gap-10 px-5 py-16 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-24">
                 <div class="reveal order-1 mx-auto w-full max-w-sm sm:max-w-md lg:mx-0 lg:max-w-md">
-                    <div class="corner-frame aspect-[3/4] overflow-hidden rounded-[22px] shadow-[0_28px_56px_-14px_rgba(254,112,163,0.5),0_10px_24px_-8px_rgba(247,162,197,0.35)]">
+                    <div class="corner-frame img-card aspect-[3/4] overflow-hidden rounded-[22px]">
                         @if($aboutImage)
                             <img src="{{ $aboutImage }}" alt="" class="h-full w-full object-cover opacity-95">
                         @else

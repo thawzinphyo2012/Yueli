@@ -215,16 +215,24 @@
             .pantry-shop .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.35rem; }
         }
         .pantry-shop .product-card {
-            background: var(--surface-soft);
+            background: #fff;
             height: 100%;
-            border: 1px solid #167a4a14;
+            border: 1px solid color-mix(in srgb, #3b82f6 28%, transparent);
             border-radius: 1.45rem;
             margin: 0;
             padding: 0 0 1rem;
             overflow: hidden;
-            transition: transform 0.4s cubic-bezier(.22, 1, .36, 1), border-color 0.3s;
+            box-shadow: 0 16px 36px -14px rgba(59, 130, 246, 0.38), 0 4px 12px -4px rgba(59, 130, 246, 0.18);
+            transition: transform 0.4s cubic-bezier(.22, 1, .36, 1), border-color 0.3s, opacity 0.7s cubic-bezier(.22, 1, .36, 1), box-shadow 0.35s ease;
         }
-        .pantry-shop .product-card:hover { border-color: #a2e5c2; transform: translateY(-8px); }
+        .pantry-shop .product-card:hover {
+            border-color: color-mix(in srgb, #3b82f6 48%, transparent);
+            transform: translateY(-8px);
+            box-shadow: 0 24px 48px -14px rgba(59, 130, 246, 0.48), 0 8px 18px -6px rgba(59, 130, 246, 0.24);
+        }
+        .pantry-shop .product-card.reveal { opacity: 0; transform: translateY(1.25rem); }
+        .pantry-shop .product-card.reveal.is-visible { opacity: 1; transform: none; }
+        .pantry-shop .product-card.reveal.is-visible:hover { transform: translateY(-8px); }
         .pantry-shop .product-card__link {
             height: 100%;
             color: inherit;
@@ -234,15 +242,27 @@
         }
         .pantry-shop .product-card__media {
             aspect-ratio: 1;
-            background: #e7f3ec;
+            background: #dbeafe;
             position: relative;
             overflow: hidden;
+            border-radius: 1.15rem 1.15rem 0 0;
+            border-bottom: 1px solid color-mix(in srgb, #3b82f6 22%, transparent);
+        }
+        @media (max-width: 639px) {
+            .pantry-shop .product-card__media {
+                max-height: 13.5rem;
+                aspect-ratio: 1 / 1.02;
+            }
+            .pantry-shop .product-grid {
+                gap: 1rem;
+            }
         }
         .pantry-shop .product-card__image {
             object-fit: cover;
             width: 100%;
             height: 100%;
             display: block;
+            border-radius: 1.15rem 1.15rem 0 0;
             transition: transform 0.8s cubic-bezier(.22, 1, .36, 1);
         }
         .pantry-shop .product-card:hover .product-card__image { transform: scale(1.06); }
@@ -364,14 +384,50 @@
         .pantry-shop .page-nav__prev.is-disabled,
         .pantry-shop .page-nav__next.is-disabled { opacity: 0.4; pointer-events: none; }
         .pantry-shop .shop-empty { text-align: center; padding: 5rem 1rem; font-family: "Cormorant Garamond", Georgia, serif; font-size: 2rem; }
+        .pantry-shop .shop-intro {
+            margin-bottom: 1.75rem;
+            max-width: 40rem;
+        }
+        .pantry-shop .shop-intro__label {
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--mint-deep);
+            font-size: 0.68rem;
+            font-weight: 600;
+        }
+        .pantry-shop .shop-intro__title {
+            font-family: "Cormorant Garamond", Georgia, serif;
+            font-size: clamp(2.4rem, 5vw, 3.4rem);
+            font-weight: 500;
+            font-style: italic;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            margin: 0.55rem 0 0;
+        }
+        .pantry-shop .shop-intro__text {
+            color: #484b4ac2;
+            margin: 0.85rem 0 0;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
     </style>
 @endpush
 
 @section('content')
     <section class="pantry-shop">
         <div class="shop-wrap">
+            <div class="shop-intro fade-up">
+                <p class="shop-intro__label">Boutique</p>
+                <h1 class="shop-intro__title">Shop</h1>
+                <p class="shop-intro__text">
+                    Soft tees and quiet staples from the atelier — choose a piece, bag it, and wear it with ease.
+                    Each garment is edited for everyday form: clean lines, calm color, and cloth that feels light on the body.
+                </p>
+            </div>
+
             <form method="GET" action="{{ route('shop.index') }}" class="shop-toolbar">
-                <h1 class="sr-only">Shop</h1>
                 <div
                     class="shop-bar"
                     x-data="{
@@ -442,10 +498,10 @@
             </form>
 
             @if($products->isNotEmpty())
-                <div class="product-grid">
+                <div class="product-grid stagger-children">
                     @foreach($products as $product)
                         @php $onSale = $product->compare_at_price && $product->compare_at_price > $product->price; @endphp
-                        <article class="product-card">
+                        <article class="product-card reveal">
                             <a href="{{ route('shop.show', $product) }}" class="product-card__link">
                                 <div class="product-card__media">
                                     @if($product->imageUrl())
