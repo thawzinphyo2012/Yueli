@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collection;
+use App\Models\ContentBlock;
 use Illuminate\View\View;
 
 class CollectionController extends Controller
@@ -16,7 +17,9 @@ class CollectionController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        return view('storefront.collections.index', compact('collections'));
+        $intro = ContentBlock::query()->where('key', 'collections_intro')->where('is_active', true)->first();
+
+        return view('storefront.collections.index', compact('collections', 'intro'));
     }
 
     public function show(Collection $collection): View

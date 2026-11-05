@@ -70,57 +70,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        ContentBlock::query()->updateOrCreate(
-            ['key' => 'home_about'],
-            [
-                'title' => 'An atelier of quiet precision',
-                'subtitle' => 'Brand',
-                'body' => 'We build small collections with lasting silhouettes — tailored cloth, considered proportion, and photography that feels like film stills.',
-                'image' => 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1400&q=80',
-                'cta_label' => 'Our story',
-                'cta_url' => '/about',
-                'page' => 'home',
-                'sort_order' => 2,
-                'is_active' => true,
-            ]
-        );
-
-        ContentBlock::query()->updateOrCreate(
-            ['key' => 'portfolio_intro'],
-            [
-                'title' => 'Designer portfolio',
-                'subtitle' => 'Selected work',
-                'body' => "Process, fittings, and collaborations — the artistic side of the house.\n\nFrom first muslin to campaign light, every study is treated as an editorial object. We document shoulder slope, soft volume, and the quiet discipline of cloth so the wardrobe can feel like a magazine spread — never louder than the person wearing it.",
-                'page' => 'portfolio',
-                'sort_order' => 1,
-                'is_active' => true,
-            ]
-        );
-
-        ContentBlock::query()->updateOrCreate(
-            ['key' => 'about_manifesto'],
-            [
-                'title' => 'Made to be worn, not performed',
-                'subtitle' => 'Philosophy',
-                'body' => 'Yueli Studio began as a private fitting room practice. Every piece is drafted for movement, then photographed as an editorial object — never louder than the person wearing it.',
-                'image' => 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1600&q=80',
-                'page' => 'about',
-                'sort_order' => 1,
-                'is_active' => true,
-            ]
-        );
-
-        ContentBlock::query()->updateOrCreate(
-            ['key' => 'about_process'],
-            [
-                'title' => 'From sketch to campaign',
-                'subtitle' => 'Process',
-                'body' => 'We prototype in natural fibers, refine through fittings, and finish with lookbook sessions that document texture before commerce.',
-                'page' => 'about',
-                'sort_order' => 2,
-                'is_active' => true,
-            ]
-        );
+        ContentBlock::ensurePageDefaults();
 
         $soft = Collection::query()->updateOrCreate(
             ['slug' => 'soft-structure'],

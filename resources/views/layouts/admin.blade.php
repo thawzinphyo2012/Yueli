@@ -247,7 +247,7 @@
                     <i data-lucide="users"></i> Customers
                 </a>
                 <a href="{{ route('admin.content.index') }}" class="nav-link {{ request()->routeIs('admin.content.*') ? 'active' : '' }}">
-                    <i data-lucide="file-text"></i> Content
+                    <i data-lucide="file-text"></i> Pages
                 </a>
                 <a href="{{ route('admin.settings.edit') }}" class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                     <i data-lucide="settings"></i> Settings

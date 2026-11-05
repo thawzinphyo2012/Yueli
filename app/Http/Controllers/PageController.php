@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContentBlock;
+use App\Models\Setting;
 use Illuminate\View\View;
 
 class PageController extends Controller
@@ -20,6 +21,17 @@ class PageController extends Controller
 
     public function contact(): View
     {
-        return view('storefront.contact');
+        $intro = ContentBlock::query()
+            ->where('key', 'contact_intro')
+            ->where('is_active', true)
+            ->first();
+
+        $contact = [
+            'email' => Setting::get('contact_email', 'studio@yuelistudio.com'),
+            'phone' => Setting::get('contact_phone', ''),
+            'address' => Setting::get('address', ''),
+        ];
+
+        return view('storefront.contact', compact('intro', 'contact'));
     }
 }

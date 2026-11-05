@@ -5,10 +5,10 @@
 @section('content')
     <section class="border-b border-ink/10">
         <div class="mx-auto max-w-7xl px-5 py-20 lg:px-8 lg:py-28">
-            <p class="fade-up section-label">Contact</p>
-            <h1 class="fade-up reveal-delay-1 mt-4 font-serif text-5xl text-ink md:text-6xl">Speak with the atelier</h1>
+            <p class="fade-up section-label">{{ $intro->subtitle ?? 'Contact' }}</p>
+            <h1 class="fade-up reveal-delay-1 mt-4 font-serif text-5xl text-ink md:text-6xl">{{ $intro->title ?? 'Speak with the atelier' }}</h1>
             <p class="fade-up reveal-delay-2 mt-5 max-w-lg font-serif text-xl leading-relaxed text-ink/65">
-                Enquiries for fittings, press, and collaborations — we respond with care.
+                {{ $intro->body ?? 'Enquiries for fittings, press, and collaborations — we respond with care.' }}
             </p>
         </div>
     </section>
@@ -18,27 +18,33 @@
             <div>
                 <p class="section-label mb-4">Studio</p>
                 <ul class="space-y-5 text-ink/75">
+                    @if(!empty($contact['email']))
                     <li class="flex items-start gap-4">
                         <i data-lucide="mail" class="mt-1 h-4 w-4 text-champagne"></i>
                         <div>
                             <p class="text-[11px] uppercase tracking-[0.2em] text-ink/40">Email</p>
-                            <a href="mailto:studio@yueli.studio" class="mt-1 block font-serif text-xl hover:text-petrol">studio@yueli.studio</a>
+                            <a href="mailto:{{ $contact['email'] }}" class="mt-1 block font-serif text-xl hover:text-petrol">{{ $contact['email'] }}</a>
                         </div>
                     </li>
+                    @endif
+                    @if(!empty($contact['phone']))
                     <li class="flex items-start gap-4">
                         <i data-lucide="phone" class="mt-1 h-4 w-4 text-champagne"></i>
                         <div>
                             <p class="text-[11px] uppercase tracking-[0.2em] text-ink/40">Phone</p>
-                            <p class="mt-1 font-serif text-xl">+1 (000) 000-0000</p>
+                            <p class="mt-1 font-serif text-xl">{{ $contact['phone'] }}</p>
                         </div>
                     </li>
+                    @endif
+                    @if(!empty($contact['address']))
                     <li class="flex items-start gap-4">
                         <i data-lucide="map-pin" class="mt-1 h-4 w-4 text-champagne"></i>
                         <div>
                             <p class="text-[11px] uppercase tracking-[0.2em] text-ink/40">Location</p>
-                            <p class="mt-1 font-serif text-xl">By appointment · Global atelier</p>
+                            <p class="mt-1 font-serif text-xl">{{ $contact['address'] }}</p>
                         </div>
                     </li>
+                    @endif
                 </ul>
             </div>
 

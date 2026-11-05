@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Collection;
+use App\Models\ContentBlock;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -54,8 +55,9 @@ class ShopController extends Controller
 
         $products = $query->latest()->paginate(8)->withQueryString();
         $collections = Collection::query()->where('is_published', true)->orderBy('sort_order')->get();
+        $intro = ContentBlock::query()->where('key', 'shop_intro')->where('is_active', true)->first();
 
-        return view('storefront.shop.index', compact('products', 'collections', 'priceFloor', 'priceCeil', 'min', 'max'));
+        return view('storefront.shop.index', compact('products', 'collections', 'priceFloor', 'priceCeil', 'min', 'max', 'intro'));
     }
 
     public function show(Product $product): View

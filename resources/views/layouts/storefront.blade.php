@@ -147,23 +147,23 @@
         @yield('content')
     </main>
 
-    <footer class="footer-glow mt-16 border-t border-porcelain/10 text-porcelain sm:mt-24 lg:mt-28">
-        <div class="mx-auto max-w-[90rem] px-4 py-14 sm:px-5 sm:py-20 lg:px-10">
-            <div class="ornament mb-10 sm:mb-12">
+    <footer class="footer-glow mt-12 border-t border-porcelain/10 text-porcelain sm:mt-24 lg:mt-28">
+        <div class="mx-auto max-w-[90rem] px-4 py-10 sm:px-5 sm:py-20 lg:px-10">
+            <div class="ornament mb-7 sm:mb-12">
                 <span class="ornament-mark">✦</span>
             </div>
-            <div class="grid gap-10 sm:gap-14 md:grid-cols-12">
-                <div class="space-y-5 md:col-span-5">
-                    <p class="font-display text-3xl italic tracking-[0.02em] sm:text-4xl">{{ $siteName ?? 'Yueli Studio' }}</p>
+            <div class="grid gap-8 sm:gap-14 md:grid-cols-12">
+                <div class="space-y-4 md:col-span-5 sm:space-y-5">
+                    <p class="font-display text-[1.85rem] italic tracking-[0.02em] sm:text-4xl">{{ $siteName ?? 'Yueli Studio' }}</p>
                     <div class="editorial-rule bg-rose"></div>
-                    <p class="max-w-sm font-serif text-lg leading-relaxed text-porcelain/65 sm:text-xl">
+                    <p class="max-w-sm font-serif text-base leading-relaxed text-porcelain/65 sm:text-xl">
                         {{ $siteTagline ?? 'A feminine editorial house of cloth, image, and quiet form.' }}
                     </p>
                 </div>
 
                 <div class="md:col-span-3">
-                    <p class="section-label mb-5 text-rose sm:mb-6">Journal</p>
-                    <ul class="space-y-3 text-[11px] uppercase tracking-[0.18em] text-porcelain/60">
+                    <p class="section-label mb-4 text-rose sm:mb-6">Journal</p>
+                    <ul class="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] uppercase tracking-[0.18em] text-porcelain/60 sm:block sm:space-y-3">
                         <li><a href="{{ route('lookbook.index') }}" class="inline-flex min-h-10 items-center hover:text-rose">Lookbook</a></li>
                         <li><a href="{{ route('collections.index') }}" class="inline-flex min-h-10 items-center hover:text-rose">Collections</a></li>
                         <li><a href="{{ route('shop.index') }}" class="inline-flex min-h-10 items-center hover:text-rose">Shop</a></li>
@@ -173,11 +173,11 @@
                 </div>
 
                 <div class="md:col-span-4">
-                    <p class="section-label mb-5 text-rose sm:mb-6">Atelier</p>
-                    <ul class="space-y-4 text-sm text-porcelain/65">
-                        <li><a href="mailto:studio@yuelistudio.com" class="hover:text-rose">studio@yuelistudio.com</a></li>
+                    <p class="section-label mb-4 text-rose sm:mb-6">Atelier</p>
+                    <ul class="space-y-3 text-sm text-porcelain/65 sm:space-y-4">
+                        <li><a href="mailto:studio@yuelistudio.com" class="break-all hover:text-rose">studio@yuelistudio.com</a></li>
                         <li>By appointment · Yangon & beyond</li>
-                        <li class="pt-2">
+                        <li class="pt-1 sm:pt-2">
                             <a href="{{ route('shop.index') }}" class="btn-outline border-porcelain/25 text-[10px]">Shop the edit</a>
                         </li>
                     </ul>

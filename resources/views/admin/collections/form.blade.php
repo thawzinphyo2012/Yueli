@@ -49,17 +49,23 @@
                 <textarea id="description" name="description" rows="5" class="admin-input">{{ old('description', $collection->description) }}</textarea>
             </div>
 
-            <div>
-                <label class="admin-label" for="cover_image">Cover image</label>
-                <input id="cover_image" name="cover_image" type="file" accept="image/*" class="admin-input">
-                @if ($collection->cover_image)
-                    <p class="text-xs text-[var(--mist)] mt-1 truncate">Current: {{ $collection->cover_image }}</p>
+            <div class="sm:col-span-2 rounded-xl border border-[var(--edge)] bg-[var(--slate)]/40 p-4 space-y-3">
+                <p class="admin-label mb-0">Cover photo</p>
+                @if ($collection->coverUrl())
+                    <div class="overflow-hidden rounded-xl border border-[var(--edge)] max-w-[12rem]">
+                        <img src="{{ $collection->coverUrl() }}" alt="" class="aspect-[3/4] w-full object-cover object-[center_18%]">
+                    </div>
                 @endif
-            </div>
-
-            <div>
-                <label class="admin-label" for="image_url">Or image URL</label>
-                <input id="image_url" name="image_url" type="url" class="admin-input" value="{{ old('image_url') }}" placeholder="https://…">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="admin-label" for="cover_image">Upload image</label>
+                        <input id="cover_image" name="cover_image" type="file" accept="image/*" class="admin-input">
+                    </div>
+                    <div>
+                        <label class="admin-label" for="image_url">Or image URL</label>
+                        <input id="image_url" name="image_url" type="url" class="admin-input" value="{{ old('image_url') }}" placeholder="https://…">
+                    </div>
+                </div>
             </div>
 
             <div class="sm:col-span-2 flex flex-wrap gap-6 pt-1">

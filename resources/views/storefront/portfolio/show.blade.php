@@ -175,11 +175,11 @@
                         @php
                             $url = str_starts_with($image, 'http') ? $image : asset('storage/'.$image);
                         @endphp
-                        <figure class="reveal group relative aspect-[3/4] max-h-72 overflow-hidden rounded-[18px] shadow-[0_16px_36px_-12px_rgba(254,112,163,0.45)] ring-1 ring-primary/20 transition duration-500 hover:-translate-y-1 hover:ring-primary/50 {{ 'reveal-delay-'.(($index % 3) + 1) }}">
+                        <figure class="reveal group relative aspect-[3/4] overflow-hidden rounded-[18px] shadow-[0_16px_36px_-12px_rgba(254,112,163,0.45)] ring-1 ring-primary/20 transition duration-500 hover:-translate-y-1 hover:ring-primary/50 {{ 'reveal-delay-'.(($index % 3) + 1) }}">
                             <img
                                 src="{{ $url }}"
                                 alt="{{ $project->title }} — {{ $index + 1 }}"
-                                class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]"
+                                class="h-full w-full object-cover object-[center_20%] transition duration-700 group-hover:scale-[1.05]"
                             >
                             <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent"></div>
                             <div class="absolute inset-x-0 bottom-0 p-3 md:p-4">

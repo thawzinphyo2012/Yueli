@@ -9,10 +9,10 @@
             <div class="fade-up ornament mb-8 justify-start">
                 <span class="ornament-mark">✦</span>
             </div>
-            <p class="fade-up section-label">Archive</p>
-            <h1 class="fade-up reveal-delay-1 mt-4 font-serif text-4xl italic text-ink sm:text-5xl md:text-7xl">Collections</h1>
+            <p class="fade-up section-label">{{ $intro->subtitle ?? 'Archive' }}</p>
+            <h1 class="fade-up reveal-delay-1 mt-4 font-serif text-4xl italic text-ink sm:text-5xl md:text-7xl">{{ $intro->title ?? 'Collections' }}</h1>
             <p class="fade-up reveal-delay-2 mt-6 max-w-xl font-serif text-xl leading-relaxed text-ink/60">
-                Seasonal chapters shaped with editorial discipline — each one a world of cloth, light, and quiet form.
+                {{ $intro->body ?? 'Seasonal chapters shaped with editorial discipline — each one a world of cloth, light, and quiet form.' }}
             </p>
         </div>
     </section>

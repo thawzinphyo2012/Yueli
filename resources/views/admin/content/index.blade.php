@@ -1,66 +1,42 @@
 @extends('layouts.admin')
 
-@section('title', 'Content')
-@section('heading', 'Content')
+@section('title', 'Pages')
+@section('heading', 'Pages')
 
 @section('content')
-<div class="space-y-4">
+<div class="space-y-5">
     <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
-            <h1 class="font-display text-2xl font-bold tracking-tight">Content</h1>
-            <p class="text-sm text-[var(--mist)] mt-1">Page blocks & CTAs</p>
-        </div>
-        <a href="{{ route('admin.content.create') }}" class="admin-btn">
-            <i data-lucide="plus" class="w-4 h-4"></i> Add block
-        </a>
-    </div>
-
-    <div class="bg-[var(--graphite)] border border-[var(--edge)] rounded-lg overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Key</th>
-                        <th>Title</th>
-                        <th>Page</th>
-                        <th>Order</th>
-                        <th>Status</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($blocks as $block)
-                        <tr>
-                            <td class="font-semibold font-mono text-xs">{{ $block->key }}</td>
-                            <td>{{ $block->title ?: '—' }}</td>
-                            <td>{{ $block->page }}</td>
-                            <td>{{ $block->sort_order }}</td>
-                            <td>
-                                @if ($block->is_active)
-                                    <span class="text-[var(--ok)]">Active</span>
-                                @else
-                                    <span class="text-[var(--mist)]">Inactive</span>
-                                @endif
-                            </td>
-                            <td class="text-right whitespace-nowrap">
-                                <a href="{{ route('admin.content.edit', $block) }}" class="text-xs text-[var(--accent)] hover:underline mr-3">Edit</a>
-                                <form action="{{ route('admin.content.destroy', $block) }}" method="POST" class="inline" onsubmit="return confirm('Delete this content block?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-xs text-[var(--danger)] hover:underline">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="text-center text-[var(--mist)] py-8">No content blocks yet.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+            <h1 class="font-display text-2xl font-bold tracking-tight">Pages</h1>
+            <p class="text-sm text-[var(--mist)] mt-1">
+                Edit each storefront page — titles, copy, and images
+            </p>
         </div>
     </div>
 
-    <div>{{ $blocks->links() }}</div>
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        @foreach ($pages as $page)
+            <a
+                href="{{ route('admin.content.page', $page['key']) }}"
+                class="group block bg-[var(--graphite)] border border-[var(--edge)] rounded-lg p-5 transition hover:border-[var(--accent)]"
+            >
+                <div class="flex items-start justify-between gap-3">
+                    <div>
+                        <p class="text-[10px] uppercase tracking-[0.18em] text-[var(--mist)]">Page</p>
+                        <h2 class="mt-1 font-display text-xl font-bold group-hover:text-[var(--accent)]">
+                            {{ $page['label'] }}
+                        </h2>
+                    </div>
+                    <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[var(--slate)] text-[var(--mist)] group-hover:bg-[var(--accent)] group-hover:text-white">
+                        <i data-lucide="pencil" class="h-4 w-4"></i>
+                    </span>
+                </div>
+                <p class="mt-3 text-sm leading-relaxed text-[var(--mist)]">{{ $page['description'] }}</p>
+                <p class="mt-4 text-xs text-[var(--mist)]">
+                    {{ $page['sections'] }} editable section{{ $page['sections'] === 1 ? '' : 's' }}
+                </p>
+            </a>
+        @endforeach
+    </div>
 </div>
 @endsection

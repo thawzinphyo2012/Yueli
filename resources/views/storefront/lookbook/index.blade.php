@@ -10,10 +10,10 @@
             <div class="fade-up ornament mb-8 justify-start">
                 <span class="ornament-mark">✦</span>
             </div>
-            <p class="fade-up section-label">Fashion journal</p>
-            <h1 class="fade-up reveal-delay-1 mt-4 font-serif text-4xl italic text-ink sm:text-5xl md:text-7xl">Lookbook</h1>
+            <p class="fade-up section-label">{{ $intro->subtitle ?? 'Fashion journal' }}</p>
+            <h1 class="fade-up reveal-delay-1 mt-4 font-serif text-4xl italic text-ink sm:text-5xl md:text-7xl">{{ $intro->title ?? 'Lookbook' }}</h1>
             <p class="fade-up reveal-delay-2 mt-6 max-w-xl font-serif text-xl leading-relaxed text-ink/60">
-                Campaign photography and editorials — the magazine pages of the house. Cloth, light, and quiet form told frame by frame.
+                {{ $intro->body ?? 'Campaign photography and editorials — the magazine pages of the house. Cloth, light, and quiet form told frame by frame.' }}
             </p>
             <div class="fade-up reveal-delay-3 mt-10 flex flex-wrap gap-6 text-[10px] uppercase tracking-[0.24em] text-mist">
                 <span>{{ $campaigns->count() }} campaigns</span>

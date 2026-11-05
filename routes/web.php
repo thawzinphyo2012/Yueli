@@ -61,6 +61,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::resource('portfolio', AdminPortfolioController::class)
         ->parameters(['portfolio' => 'project'])
         ->except(['show']);
+    Route::get('content/pages/{page}', [AdminContentController::class, 'page'])->name('content.page');
     Route::resource('content', AdminContentController::class)->except(['show']);
 
     Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');

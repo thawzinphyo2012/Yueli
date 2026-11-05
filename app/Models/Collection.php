@@ -36,4 +36,14 @@ class Collection extends Model
         return $this->hasMany(Lookbook::class);
     }
 
+    public function coverUrl(): ?string
+    {
+        if (! $this->cover_image) {
+            return null;
+        }
+
+        return str_starts_with($this->cover_image, 'http')
+            ? $this->cover_image
+            : asset('storage/'.$this->cover_image);
+    }
 }

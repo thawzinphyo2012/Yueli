@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContentBlock;
 use App\Models\Lookbook;
 use Illuminate\View\View;
 
@@ -16,8 +17,9 @@ class LookbookController extends Controller
 
         $campaigns = $lookbooks->where('is_campaign', true);
         $editorials = $lookbooks->where('is_campaign', false);
+        $intro = ContentBlock::query()->where('key', 'lookbook_intro')->where('is_active', true)->first();
 
-        return view('storefront.lookbook.index', compact('campaigns', 'editorials'));
+        return view('storefront.lookbook.index', compact('campaigns', 'editorials', 'intro'));
     }
 
     public function show(Lookbook $lookbook): View

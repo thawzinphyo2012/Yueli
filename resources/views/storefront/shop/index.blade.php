@@ -3,72 +3,97 @@
 @section('title', 'Shop — '.($siteName ?? 'Yueli Studio'))
 
 @push('styles')
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        .pantry-shop {
-            --mint: #55cf90;
-            --mint-deep: #167a4a;
-            --ink: #141716;
-            --charcoal: #484b4a;
-            --ivory: #f4f1eb;
+        .atelier-shop {
+            --accent: #e23d86;
+            --accent-soft: #fe70a3;
+            --ink: #1c1517;
+            --mist: #7d6876;
+            --ivory: #faf6f2;
             --surface: #fff;
-            --surface-soft: #fbfcfb;
             background: var(--ivory);
             color: var(--ink);
-            font-family: Outfit, ui-sans-serif, system-ui, sans-serif;
         }
-        .pantry-shop .shop-wrap {
+        .atelier-shop .shop-wrap {
             max-width: 80rem;
             margin: 0 auto;
             padding: 2rem 1rem 4rem;
         }
         @media (min-width: 640px) {
-            .pantry-shop .shop-wrap { padding: 2.5rem 1.5rem 5rem; }
+            .atelier-shop .shop-wrap { padding: 2.5rem 1.5rem 5rem; }
         }
         @media (min-width: 1024px) {
-            .pantry-shop .shop-wrap { padding-left: 2rem; padding-right: 2rem; }
+            .atelier-shop .shop-wrap { padding-left: 2rem; padding-right: 2rem; }
         }
-        .pantry-shop .shop-bar {
+        .atelier-shop .shop-intro {
+            margin-bottom: 1.75rem;
+            max-width: 40rem;
+        }
+        .atelier-shop .shop-intro__label {
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-size: 0.68rem;
+            font-weight: 600;
+        }
+        .atelier-shop .shop-intro__title {
+            font-family: "Cormorant Garamond", Georgia, serif;
+            font-size: clamp(2.4rem, 5vw, 3.4rem);
+            font-weight: 500;
+            font-style: italic;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            margin: 0.55rem 0 0;
+        }
+        .atelier-shop .shop-intro__text {
+            color: color-mix(in srgb, var(--ink) 55%, transparent);
+            margin: 0.85rem 0 0;
+            font-size: 1.02rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        .atelier-shop .shop-bar {
             display: grid;
             grid-template-columns: 1fr;
             align-items: center;
             gap: 0.75rem;
         }
         @media (min-width: 1024px) {
-            .pantry-shop .shop-bar {
+            .atelier-shop .shop-bar {
                 grid-template-columns: minmax(11.5rem, 13.5rem) minmax(11.5rem, 13.5rem) minmax(0, 1fr) 15.5rem;
             }
         }
-        .pantry-shop .shop-type { position: relative; }
-        .pantry-shop .shop-type__toggle {
+        .atelier-shop .shop-type { position: relative; }
+        .atelier-shop .shop-type__toggle {
             background: var(--surface);
             width: 100%;
             height: 2.85rem;
             color: var(--ink);
             text-align: left;
             cursor: pointer;
-            border: 1px solid #167a4a2e;
+            border: 1px solid rgba(226, 61, 134, 0.18);
             border-radius: 999px;
             justify-content: space-between;
             align-items: center;
             gap: 0.6rem;
             padding: 0 1rem 0 1.15rem;
-            font-size: 0.94rem;
+            font-size: 0.92rem;
             display: flex;
         }
-        .pantry-shop .shop-type__toggle svg {
+        .atelier-shop .shop-type__toggle svg {
             width: 1rem;
             height: 1rem;
-            color: var(--mint-deep);
+            color: var(--accent);
             flex-shrink: 0;
             transition: transform 0.2s;
         }
-        .pantry-shop .shop-type.is-open .shop-type__toggle { border-color: var(--mint-deep); }
-        .pantry-shop .shop-type.is-open .shop-type__toggle svg { transform: rotate(180deg); }
-        .pantry-shop .shop-type__menu {
+        .atelier-shop .shop-type.is-open .shop-type__toggle { border-color: var(--accent); }
+        .atelier-shop .shop-type.is-open .shop-type__toggle svg { transform: rotate(180deg); }
+        .atelier-shop .shop-type__menu {
             z-index: 30;
-            background: var(--surface-soft);
-            border: 1px solid #167a4a1f;
+            background: var(--surface);
+            border: 1px solid rgba(226, 61, 134, 0.12);
             border-radius: 1.15rem;
             width: max-content;
             min-width: 100%;
@@ -79,10 +104,10 @@
             top: calc(100% + 0.45rem);
             left: 0;
             overflow-y: auto;
-            box-shadow: 0 18px 40px #1417161a;
+            box-shadow: 0 18px 40px rgba(28, 21, 23, 0.1);
         }
-        .pantry-shop .shop-type__option {
-            color: #3a403e;
+        .atelier-shop .shop-type__option {
+            color: var(--mist);
             text-align: left;
             cursor: pointer;
             background: transparent;
@@ -90,14 +115,14 @@
             border-radius: 0.75rem;
             width: 100%;
             padding: 0.58rem 0.9rem;
-            font-size: 0.94rem;
+            font-size: 0.92rem;
             display: block;
         }
-        .pantry-shop .shop-type__option:hover { color: var(--mint-deep); background: #55cf9024; }
-        .pantry-shop .shop-type__option.is-active { color: var(--mint-deep); background: #167a4a1a; font-weight: 600; }
-        .pantry-shop .shop-range {
+        .atelier-shop .shop-type__option:hover { color: var(--accent); background: rgba(254, 112, 163, 0.12); }
+        .atelier-shop .shop-type__option.is-active { color: var(--accent); background: rgba(226, 61, 134, 0.1); font-weight: 600; }
+        .atelier-shop .shop-range {
             background: var(--surface);
-            border: 1px solid #167a4a2e;
+            border: 1px solid rgba(226, 61, 134, 0.18);
             border-radius: 999px;
             display: grid;
             grid-template-columns: auto minmax(0, 1fr) auto;
@@ -108,15 +133,15 @@
             padding: 0 1rem;
             position: relative;
         }
-        .pantry-shop .shop-range__amount {
+        .atelier-shop .shop-range__amount {
             color: var(--ink);
             white-space: nowrap;
             font-size: 0.82rem;
             font-weight: 600;
         }
-        .pantry-shop .shop-range__control { height: 1.5rem; position: relative; }
-        .pantry-shop .shop-range__bar {
-            background: #167a4a24;
+        .atelier-shop .shop-range__control { height: 1.5rem; position: relative; }
+        .atelier-shop .shop-range__bar {
+            background: rgba(226, 61, 134, 0.14);
             border-radius: 999px;
             height: 3px;
             position: absolute;
@@ -125,16 +150,16 @@
             right: 0.45rem;
             transform: translateY(-50%);
         }
-        .pantry-shop .shop-range__bar:after {
+        .atelier-shop .shop-range__bar:after {
             content: "";
             left: var(--lo, 0%);
             right: calc(100% - var(--hi, 100%));
             border-radius: inherit;
-            background: #167a4a;
+            background: var(--accent);
             height: 100%;
             position: absolute;
         }
-        .pantry-shop .shop-range__control input[type="range"] {
+        .atelier-shop .shop-range__control input[type="range"] {
             pointer-events: none;
             appearance: none;
             background: transparent;
@@ -143,30 +168,30 @@
             position: absolute;
             inset: 0;
         }
-        .pantry-shop .shop-range__control input[type="range"]::-webkit-slider-thumb {
+        .atelier-shop .shop-range__control input[type="range"]::-webkit-slider-thumb {
             background: var(--surface);
             pointer-events: auto;
             appearance: none;
             cursor: pointer;
-            border: 2px solid #167a4a;
+            border: 2px solid var(--accent);
             border-radius: 999px;
             width: 16px;
             height: 16px;
-            box-shadow: 0 1px 4px #1417161f;
+            box-shadow: 0 1px 4px rgba(28, 21, 23, 0.12);
         }
-        .pantry-shop .shop-range__control input[type="range"]::-moz-range-thumb {
+        .atelier-shop .shop-range__control input[type="range"]::-moz-range-thumb {
             background: var(--surface);
             pointer-events: auto;
             cursor: pointer;
-            border: 2px solid #167a4a;
+            border: 2px solid var(--accent);
             border-radius: 999px;
             width: 16px;
             height: 16px;
         }
-        .pantry-shop .shop-search {
+        .atelier-shop .shop-search {
             box-sizing: border-box;
             background: var(--surface);
-            border: 1px solid #167a4a33;
+            border: 1px solid rgba(226, 61, 134, 0.2);
             border-radius: 999px;
             align-items: center;
             gap: 0.35rem;
@@ -175,24 +200,24 @@
             padding: 0.28rem 0.28rem 0.28rem 0.95rem;
             display: flex;
         }
-        .pantry-shop .shop-search:focus-within {
-            border-color: var(--mint-deep);
-            box-shadow: 0 0 0 4px #55cf902e;
+        .atelier-shop .shop-search:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(254, 112, 163, 0.16);
         }
-        .pantry-shop .shop-search input {
+        .atelier-shop .shop-search input {
             min-width: 0;
             color: var(--ink);
             background: transparent;
             border: 0;
             outline: none;
             flex: 1;
-            font-size: 0.98rem;
+            font-size: 0.95rem;
         }
-        .pantry-shop .shop-search input::placeholder { color: #8b918e; }
-        .pantry-shop .shop-search button {
+        .atelier-shop .shop-search input::placeholder { color: #a898a2; }
+        .atelier-shop .shop-search button {
             color: #fff;
             cursor: pointer;
-            background: #167a4a;
+            background: var(--accent);
             border: 0;
             border-radius: 999px;
             place-items: center;
@@ -200,155 +225,153 @@
             height: 2.35rem;
             display: grid;
         }
-        .pantry-shop .shop-search button:hover { background: #126840; }
-        .pantry-shop .shop-search svg { width: 1.05rem; height: 1.05rem; }
-        .pantry-shop .product-grid {
+        .atelier-shop .shop-search button:hover { background: #c83274; }
+        .atelier-shop .shop-search svg { width: 1.05rem; height: 1.05rem; }
+
+        .atelier-shop .product-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.25rem;
-            margin-top: 2.5rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2.25rem;
         }
-        @media (min-width: 640px) {
-            .pantry-shop .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        @media (min-width: 768px) {
+            .atelier-shop .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
         }
         @media (min-width: 1024px) {
-            .pantry-shop .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.35rem; }
+            .atelier-shop .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.35rem; }
         }
-        .pantry-shop .product-card {
-            background: #fff;
+
+        .atelier-shop .product-card {
+            background: var(--surface);
             height: 100%;
-            border: 1px solid color-mix(in srgb, #3b82f6 28%, transparent);
+            border: 1px solid rgba(28, 21, 23, 0.08);
             border-radius: 1.45rem;
             margin: 0;
-            padding: 0 0 1rem;
+            padding: 0 0 0.95rem;
             overflow: hidden;
-            box-shadow: 0 16px 36px -14px rgba(59, 130, 246, 0.38), 0 4px 12px -4px rgba(59, 130, 246, 0.18);
-            transition: transform 0.4s cubic-bezier(.22, 1, .36, 1), border-color 0.3s, opacity 0.7s cubic-bezier(.22, 1, .36, 1), box-shadow 0.35s ease;
+            box-shadow: 0 14px 32px -16px rgba(28, 21, 23, 0.14);
+            transition: transform 0.45s cubic-bezier(.22, 1, .36, 1), box-shadow 0.4s ease, border-color 0.3s;
         }
-        .pantry-shop .product-card:hover {
-            border-color: color-mix(in srgb, #3b82f6 48%, transparent);
-            transform: translateY(-8px);
-            box-shadow: 0 24px 48px -14px rgba(59, 130, 246, 0.48), 0 8px 18px -6px rgba(59, 130, 246, 0.24);
+        .atelier-shop .product-card:hover {
+            border-color: rgba(226, 61, 134, 0.28);
+            transform: translateY(-6px);
+            box-shadow: 0 22px 44px -16px rgba(226, 61, 134, 0.22);
         }
-        .pantry-shop .product-card.reveal { opacity: 0; transform: translateY(1.25rem); }
-        .pantry-shop .product-card.reveal.is-visible { opacity: 1; transform: none; }
-        .pantry-shop .product-card.reveal.is-visible:hover { transform: translateY(-8px); }
-        .pantry-shop .product-card__link {
+        .atelier-shop .product-card.reveal { opacity: 0; transform: translateY(1.15rem); }
+        .atelier-shop .product-card.reveal.is-visible { opacity: 1; transform: none; }
+        .atelier-shop .product-card.reveal.is-visible:hover { transform: translateY(-6px); }
+        .atelier-shop .product-card__link {
             height: 100%;
             color: inherit;
             flex-direction: column;
             text-decoration: none;
             display: flex;
         }
-        .pantry-shop .product-card__media {
-            aspect-ratio: 1;
-            background: #dbeafe;
+        .atelier-shop .product-card__media {
+            aspect-ratio: 1 / 1.08;
+            max-height: 17rem;
+            background: #f3ecef;
             position: relative;
             overflow: hidden;
-            border-radius: 1.15rem 1.15rem 0 0;
-            border-bottom: 1px solid color-mix(in srgb, #3b82f6 22%, transparent);
+            border-radius: 1.35rem 1.35rem 0 0;
+            border-bottom: 1px solid rgba(28, 21, 23, 0.06);
         }
-        @media (max-width: 639px) {
-            .pantry-shop .product-card__media {
-                max-height: 13.5rem;
-                aspect-ratio: 1 / 1.02;
-            }
-            .pantry-shop .product-grid {
-                gap: 1rem;
-            }
+        @media (min-width: 1024px) {
+            .atelier-shop .product-card__media { max-height: 18.5rem; }
         }
-        .pantry-shop .product-card__image {
+        .atelier-shop .product-card__image {
             object-fit: cover;
+            object-position: center 18%;
             width: 100%;
             height: 100%;
             display: block;
-            border-radius: 1.15rem 1.15rem 0 0;
             transition: transform 0.8s cubic-bezier(.22, 1, .36, 1);
         }
-        .pantry-shop .product-card:hover .product-card__image { transform: scale(1.06); }
-        .pantry-shop .product-card__badge {
+        .atelier-shop .product-card:hover .product-card__image { transform: scale(1.05); }
+        .atelier-shop .product-card__badge {
             z-index: 2;
-            border: 1px solid #55cf90;
-            background: #faf8f4f5;
+            border: 1px solid rgba(226, 61, 134, 0.35);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 999px;
             letter-spacing: 0.16em;
             text-transform: uppercase;
-            color: var(--mint-deep);
+            color: var(--accent);
             padding: 0.32rem 0.62rem;
-            font-size: 0.6rem;
+            font-size: 0.58rem;
             font-weight: 600;
             position: absolute;
             top: 0.65rem;
             left: 0.65rem;
         }
-        .pantry-shop .product-card__meta {
+        .atelier-shop .product-card__meta {
             flex-direction: column;
             flex: 1;
-            padding: 0.9rem 1rem 0.15rem;
+            padding: 0.85rem 1rem 0.1rem;
             display: flex;
         }
-        .pantry-shop .product-card__row {
+        .atelier-shop .product-card__row {
             justify-content: space-between;
             align-items: flex-start;
             gap: 0.75rem;
             display: flex;
         }
-        .pantry-shop .eyebrow {
+        .atelier-shop .eyebrow {
             letter-spacing: 0.16em;
             text-transform: uppercase;
-            font-size: 0.68rem;
+            font-size: 0.64rem;
             font-weight: 500;
-            color: #484b4ab8;
+            color: color-mix(in srgb, var(--mist) 85%, transparent);
         }
-        .pantry-shop .product-card__price {
+        .atelier-shop .product-card__price {
             text-align: right;
-            color: var(--mint-deep);
-            font-size: 0.9rem;
+            color: var(--accent);
+            font-size: 0.88rem;
             font-weight: 600;
         }
-        .pantry-shop .product-card__price .is-compare {
-            color: #484b4a80;
+        .atelier-shop .product-card__price .is-compare {
+            color: color-mix(in srgb, var(--mist) 75%, transparent);
             margin-top: 0.15rem;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 400;
             text-decoration: line-through;
         }
-        .pantry-shop .product-card h3 {
+        .atelier-shop .product-card h3 {
             font-family: "Cormorant Garamond", Georgia, serif;
             letter-spacing: -0.02em;
             color: var(--ink);
-            margin: 0.55rem 0 0;
-            font-size: clamp(1.35rem, 2vw, 1.6rem);
+            margin: 0.5rem 0 0;
+            font-size: clamp(1.25rem, 2vw, 1.5rem);
             font-weight: 500;
             line-height: 1.12;
         }
-        .pantry-shop .product-card:hover h3 { color: var(--mint-deep); }
-        .pantry-shop .product-card__sub {
-            color: #484b4ac2;
-            margin: 0.4rem 0 0;
-            font-size: 0.88rem;
-            line-height: 1.5;
+        .atelier-shop .product-card:hover h3 { color: var(--accent); }
+        .atelier-shop .product-card__sub {
+            color: color-mix(in srgb, var(--ink) 52%, transparent);
+            margin: 0.35rem 0 0;
+            font-size: 0.84rem;
+            line-height: 1.45;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        .pantry-shop .product-card__hint {
+        .atelier-shop .product-card__hint {
             letter-spacing: 0.16em;
             text-transform: uppercase;
             width: fit-content;
-            color: var(--mint-deep);
+            color: var(--accent);
             align-items: center;
             gap: 0.35rem;
             margin-top: auto;
-            padding: 0.85rem 0 0;
-            font-size: 0.64rem;
+            padding: 0.75rem 0 0;
+            font-size: 0.6rem;
             font-weight: 600;
             display: inline-flex;
         }
-        .pantry-shop .product-card__hint:after { content: "→"; display: inline-block; }
-        .pantry-shop .product-card:hover .product-card__hint:after { transform: translateX(0.28rem); }
-        .pantry-shop .page-nav {
+        .atelier-shop .product-card__hint:after { content: "→"; display: inline-block; transition: transform 0.25s ease; }
+        .atelier-shop .product-card:hover .product-card__hint:after { transform: translateX(0.25rem); }
+
+        .atelier-shop .page-nav {
             justify-content: center;
             align-items: center;
             gap: 0.85rem;
@@ -356,74 +379,57 @@
             display: flex;
             flex-wrap: wrap;
         }
-        .pantry-shop .page-nav__status {
+        .atelier-shop .page-nav__status {
             min-width: 8rem;
-            color: var(--charcoal);
+            color: var(--mist);
             text-align: center;
-            font-size: 0.92rem;
+            font-size: 0.88rem;
         }
-        .pantry-shop .page-nav__prev,
-        .pantry-shop .page-nav__next {
+        .atelier-shop .page-nav__prev,
+        .atelier-shop .page-nav__next {
             letter-spacing: 0.16em;
             text-transform: uppercase;
             border-radius: 999px;
             justify-content: center;
             align-items: center;
             min-width: 7.5rem;
-            min-height: 2.8rem;
+            min-height: 2.7rem;
             padding: 0.55rem 1.1rem;
-            font-size: 0.78rem;
+            font-size: 0.72rem;
             font-weight: 600;
             text-decoration: none;
             display: inline-flex;
         }
-        .pantry-shop .page-nav__prev { background: var(--surface); color: var(--mint-deep); border: 1px solid #167a4a47; }
-        .pantry-shop .page-nav__next { color: #fff; background: #167a4a; }
-        .pantry-shop .page-nav__prev:hover,
-        .pantry-shop .page-nav__next:hover { color: #fff; background: #126840; }
-        .pantry-shop .page-nav__prev.is-disabled,
-        .pantry-shop .page-nav__next.is-disabled { opacity: 0.4; pointer-events: none; }
-        .pantry-shop .shop-empty { text-align: center; padding: 5rem 1rem; font-family: "Cormorant Garamond", Georgia, serif; font-size: 2rem; }
-        .pantry-shop .shop-intro {
-            margin-bottom: 1.75rem;
-            max-width: 40rem;
-        }
-        .pantry-shop .shop-intro__label {
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--mint-deep);
-            font-size: 0.68rem;
-            font-weight: 600;
-        }
-        .pantry-shop .shop-intro__title {
+        .atelier-shop .page-nav__prev { background: var(--surface); color: var(--accent); border: 1px solid rgba(226, 61, 134, 0.28); }
+        .atelier-shop .page-nav__next { color: #fff; background: var(--accent); border: 1px solid var(--accent); }
+        .atelier-shop .page-nav__prev:hover,
+        .atelier-shop .page-nav__next:hover { color: #fff; background: #c83274; border-color: #c83274; }
+        .atelier-shop .page-nav__prev.is-disabled,
+        .atelier-shop .page-nav__next.is-disabled { opacity: 0.4; pointer-events: none; }
+        .atelier-shop .shop-empty {
+            text-align: center;
+            padding: 5rem 1rem;
             font-family: "Cormorant Garamond", Georgia, serif;
-            font-size: clamp(2.4rem, 5vw, 3.4rem);
-            font-weight: 500;
+            font-size: 2rem;
             font-style: italic;
-            line-height: 1.05;
-            letter-spacing: -0.02em;
-            color: var(--ink);
-            margin: 0.55rem 0 0;
+            color: var(--mist);
         }
-        .pantry-shop .shop-intro__text {
-            color: #484b4ac2;
-            margin: 0.85rem 0 0;
-            font-size: 1.05rem;
-            line-height: 1.6;
-            font-weight: 300;
+
+        @media (max-width: 639px) {
+            .atelier-shop .product-card__media { max-height: 13.5rem; }
+            .atelier-shop .product-card h3 { font-size: 1.15rem; }
         }
     </style>
 @endpush
 
 @section('content')
-    <section class="pantry-shop">
+    <section class="atelier-shop">
         <div class="shop-wrap">
             <div class="shop-intro fade-up">
-                <p class="shop-intro__label">Boutique</p>
-                <h1 class="shop-intro__title">Shop</h1>
+                <p class="shop-intro__label">{{ $intro->subtitle ?? 'Boutique' }}</p>
+                <h1 class="shop-intro__title">{{ $intro->title ?? 'Shop' }}</h1>
                 <p class="shop-intro__text">
-                    Soft tees and quiet staples from the atelier — choose a piece, bag it, and wear it with ease.
-                    Each garment is edited for everyday form: clean lines, calm color, and cloth that feels light on the body.
+                    {{ $intro->body ?? 'Soft tees and quiet staples from the atelier — choose a piece, bag it, and wear it with ease. Each garment is edited for everyday form: clean lines, calm color, and cloth that feels light on the body.' }}
                 </p>
             </div>
 

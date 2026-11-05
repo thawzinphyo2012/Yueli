@@ -64,9 +64,9 @@
                 </div>
 
                 <a href="{{ route('portfolio.show', $featured) }}" class="reveal group relative block overflow-hidden rounded-[28px] shadow-[0_28px_60px_-20px_rgba(254,112,163,0.5)] ring-1 ring-primary/20">
-                    <div class="relative aspect-[16/11] max-h-[26rem] overflow-hidden bg-blush sm:aspect-[21/11] sm:max-h-[28rem]">
-                        @if($featured->coverUrl())
-                            <img src="{{ $featured->coverUrl() }}" alt="{{ $featured->title }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]">
+                    <div class="relative aspect-[4/5] overflow-hidden bg-blush sm:aspect-[21/11] sm:max-h-[28rem]">
+                            @if($featured->coverUrl())
+                                <img src="{{ $featured->coverUrl() }}" alt="{{ $featured->title }}" class="h-full w-full object-cover object-[center_22%] transition duration-700 group-hover:scale-[1.03]">
                         @else
                             <div class="h-full bg-gradient-to-br from-soft to-primary/50"></div>
                         @endif
@@ -114,9 +114,9 @@
                     @foreach($rest as $index => $project)
                         <a href="{{ route('portfolio.show', $project) }}" class="reveal group {{ 'reveal-delay-'.(($index % 2) + 1) }}">
                             <div class="relative overflow-hidden rounded-[22px] shadow-[0_18px_42px_-16px_rgba(254,112,163,0.42)] ring-1 ring-primary/10 transition duration-500 group-hover:-translate-y-1 group-hover:ring-primary/30">
-                                <div class="relative aspect-[4/5] max-h-80 overflow-hidden bg-blush">
+                                <div class="relative aspect-[4/5] overflow-hidden bg-blush">
                                     @if($project->coverUrl())
-                                        <img src="{{ $project->coverUrl() }}" alt="{{ $project->title }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]">
+                                        <img src="{{ $project->coverUrl() }}" alt="{{ $project->title }}" class="h-full w-full object-cover object-[center_20%] transition duration-700 group-hover:scale-[1.05]">
                                     @else
                                         <div class="h-full bg-gradient-to-br from-soft to-primary/40"></div>
                                     @endif

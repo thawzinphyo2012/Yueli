@@ -4,25 +4,26 @@
 
 @section('content')
     @php
-        $heroTitle = $hero->title ?? 'Soft structure, quiet presence.';
-        $heroSubtitle = $hero->subtitle ?? 'Season 26';
+        $heroTitle = $hero->title ?? 'Cloth for a quiet silhouette.';
+        $heroSubtitle = $hero->subtitle ?? 'Season 26 — Soft Structure';
+        $heroEyebrow = $hero->eyebrow ?? 'Contemporary Atelier';
         $heroBody = $hero->body ?? ($siteTagline ?? 'Clothing composed like a magazine spread — feminine, minimal, enduring.');
-        $heroCtaLabel = $hero->cta_label ?? 'Enter the edit';
+        $heroCtaLabel = $hero->cta_label ?? 'Shop the edit';
         $heroCtaUrl = $hero->cta_url ?? route('shop.index');
-        $heroImage = null;
-        if ($hero?->image) {
-            $heroImage = str_starts_with($hero->image, 'http') ? $hero->image : asset('storage/'.$hero->image);
-        }
+        $heroCta2Label = $hero->cta2_label ?? 'Read the lookbook';
+        $heroCta2Url = $hero->cta2_url ?? route('lookbook.index');
+        $heroImage = $hero?->imageUrl();
     @endphp
 
-    {{-- Cover — Harvest-style cinematic hero --}}
-    <section class="grain relative min-h-[100svh] w-full overflow-hidden bg-ink text-porcelain">
+    {{-- Cover — cinematic editorial hero --}}
+    <section class="hero-stage grain relative min-h-[100svh] w-full overflow-hidden bg-ink text-porcelain">
         @if($heroImage)
             <div class="absolute inset-0 overflow-hidden" data-parallax="0.06">
-                <img src="{{ $heroImage }}" alt="" class="ken-burns absolute inset-0 h-full w-full scale-105 object-cover">
+                <img src="{{ $heroImage }}" alt="{{ $heroTitle }}" class="ken-burns absolute inset-0 h-full w-full scale-105 object-cover object-[68%_center] sm:object-[center_22%]">
             </div>
-            <div class="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/55 to-ink/20"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-ink/30"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-ink/92 via-ink/58 to-ink/25"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/35"></div>
+            <div class="hero-vignette" aria-hidden="true"></div>
         @else
             <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_20%,#FE70A3_0%,transparent_50%),linear-gradient(165deg,#000002_0%,#E90E1E_100%)]"></div>
         @endif
@@ -33,34 +34,45 @@
         <div class="glow-orb-sky bottom-1/4 left-[6%] h-52 w-52 opacity-45" style="animation-delay: 1.2s"></div>
         <div class="glow-orb-sky right-[18%] bottom-[12%] h-36 w-36 opacity-35" style="animation-delay: 2s"></div>
 
-        <div class="relative z-10 mx-auto flex min-h-[100svh] max-w-[90rem] items-center px-4 py-24 sm:px-5 sm:py-28 lg:px-10">
-            <div class="max-w-2xl">
-                <p class="fade-up text-[10px] font-medium uppercase tracking-[0.28em] sm:text-[11px]">
-                    <span class="text-rose">{{ $heroSubtitle ?? 'Season 26' }}</span>
-                    <span class="text-porcelain/50"> · </span>
-                    <span class="text-sky/90">Contemporary Atelier</span>
+        <div class="relative z-10 mx-auto flex min-h-[100svh] max-w-[90rem] items-end px-4 pb-20 pt-28 sm:items-center sm:px-5 sm:pb-28 sm:pt-28 lg:px-10">
+            <div class="hero-copy max-w-2xl">
+                <p class="fade-up hero-kicker text-[9px] font-medium uppercase tracking-[0.22em] sm:text-[11px] sm:tracking-[0.28em]">
+                    <span class="text-rose">{{ $heroSubtitle }}</span>
+                    @if($heroEyebrow)
+                        <span class="text-porcelain/45"> · </span>
+                        <span class="text-sky/90">{{ $heroEyebrow }}</span>
+                    @endif
                 </p>
 
-                <p class="fade-up reveal-delay-1 mt-5 font-display text-4xl font-medium italic leading-none tracking-[0.02em] text-porcelain sm:mt-7 sm:text-6xl md:text-7xl lg:text-8xl">
+                <p class="text-rise mt-4 font-display text-[2.35rem] font-medium italic leading-none tracking-[0.02em] text-porcelain sm:mt-7 sm:text-6xl md:text-7xl lg:text-8xl">
                     {{ $siteName ?? 'Yueli Studio' }}
                 </p>
 
-                <h1 class="fade-up reveal-delay-2 mt-6 max-w-xl font-serif text-[1.75rem] font-normal leading-[1.15] text-porcelain sm:mt-8 sm:text-4xl md:text-5xl lg:text-[3.25rem]">
-                    Cloth for a
-                    <em class="hero-accent">quiet</em>
-                    silhouette.
+                <div class="fade-up reveal-delay-1 mt-5 h-px w-16 bg-gradient-to-r from-rose to-transparent sm:mt-7 sm:w-24" aria-hidden="true"></div>
+
+                <h1 class="bloom-in reveal-delay-2 mt-5 max-w-xl font-serif text-[1.45rem] font-normal leading-[1.2] text-porcelain sm:mt-7 sm:text-4xl md:text-5xl lg:text-[3.25rem]">
+                    {{ $heroTitle }}
                 </h1>
 
-                <p class="fade-up reveal-delay-3 mt-5 max-w-md font-serif text-base leading-relaxed text-porcelain/70 sm:mt-6 sm:text-lg md:text-xl">
+                <p class="fade-up reveal-delay-3 mt-4 max-w-md font-serif text-[0.95rem] leading-relaxed text-porcelain/70 sm:mt-6 sm:text-lg md:text-xl">
                     {{ $heroBody }}
                 </p>
 
-                <div class="fade-up reveal-delay-4 mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
-                    <a href="{{ $heroCtaUrl }}" class="btn-rose w-full sm:w-auto">{{ $heroCtaLabel }}</a>
-                    <a href="{{ route('lookbook.index') }}" class="btn-outline w-full sm:w-auto">Read the lookbook</a>
+                <div class="fade-up reveal-delay-4 mt-7 flex w-full flex-col gap-2.5 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+                    @if($heroCtaLabel)
+                        <a href="{{ $heroCtaUrl }}" class="btn-rose w-full sm:w-auto">{{ $heroCtaLabel }}</a>
+                    @endif
+                    @if($heroCta2Label)
+                        <a href="{{ $heroCta2Url }}" class="btn-outline w-full sm:w-auto">{{ $heroCta2Label }}</a>
+                    @endif
                 </div>
             </div>
         </div>
+
+        <a href="#shop-home" class="hero-scroll absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-[9px] uppercase tracking-[0.28em] text-porcelain/55 transition hover:text-rose sm:flex" aria-label="Scroll to shop">
+            <span>Scroll</span>
+            <span class="hero-scroll-line" aria-hidden="true"></span>
+        </a>
     </section>
 
     {{-- Marquee ribbon --}}
@@ -77,49 +89,61 @@
         </div>
     </div>
 
-    {{-- Shop --}}
+    {{-- Shop — editorial rail --}}
     @if($products->isNotEmpty())
-        <section class="relative overflow-hidden border-b border-ink/8 bg-blush/60">
-            <div class="pointer-events-none absolute inset-0 opacity-50" style="background-image: radial-gradient(ellipse at 20% 0%, rgba(254,112,163,0.16), transparent 45%), radial-gradient(ellipse at 90% 100%, rgba(247,162,197,0.2), transparent 40%);"></div>
-            <div class="glow-orb-sky pointer-events-none absolute -right-16 top-24 h-64 w-64 opacity-20"></div>
-            <div class="relative mx-auto max-w-[90rem] px-5 py-24 lg:px-10 lg:py-28">
-                <div class="fade-up ornament mb-10">
-                    <span class="ornament-mark text-sky">✦</span>
-                </div>
-                <div class="fade-up mb-6 flex flex-col gap-6 lg:mb-14 lg:flex-row lg:items-end lg:justify-between">
-                    <div class="max-w-xl">
-                        <p class="section-label">Boutique</p>
-                        <h2 class="mt-4 font-serif text-5xl italic text-ink md:text-6xl">Shop</h2>
-                        <p class="mt-5 font-serif text-xl leading-relaxed text-ink/60">
-                            Soft tees and quiet staples from the atelier — select a piece, bag it, and wear it with ease.
-                            Clean lines, calm color, and cloth that feels light on the body.
+        <section id="shop-home" class="shop-home relative overflow-hidden border-b border-ink/8 bg-porcelain">
+            <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-rose/50 to-transparent"></div>
+            <div class="pointer-events-none absolute -left-20 top-1/3 h-72 w-72 rounded-full bg-rose/10 blur-3xl"></div>
+            <div class="pointer-events-none absolute -right-16 bottom-10 h-64 w-64 rounded-full bg-sky/10 blur-3xl"></div>
+
+            <div class="relative mx-auto max-w-[90rem] px-4 py-14 sm:px-5 sm:py-20 lg:px-10 lg:py-28">
+                <div class="fade-up mb-10 grid gap-6 lg:mb-14 lg:grid-cols-12 lg:items-end lg:gap-10">
+                    <div class="lg:col-span-7">
+                        <div class="flex items-center gap-3">
+                            <span class="font-display text-3xl italic text-rose/80">01</span>
+                            <p class="section-label mb-0">{{ $shopIntro->subtitle ?? 'Boutique' }}</p>
+                        </div>
+                        <h2 class="mt-3 font-serif text-4xl italic leading-none text-ink sm:mt-4 sm:text-5xl md:text-6xl">
+                            {{ $shopIntro->title ?? 'Shop' }}
+                        </h2>
+                        <p class="mt-4 max-w-lg font-serif text-base leading-relaxed text-ink/60 sm:mt-5 sm:text-xl">
+                            {{ $shopIntro->body ?? 'Soft tees and quiet staples from the atelier — select a piece, bag it, and wear it with ease.' }}
                         </p>
                     </div>
-                    <a href="{{ route('shop.index') }}" class="btn-ghost shrink-0">Shop all pieces</a>
+                    <div class="lg:col-span-5 lg:flex lg:justify-end">
+                        <a href="{{ $shopIntro->cta_url ?? route('shop.index') }}" class="btn-rose w-full sm:w-auto">
+                            {{ $shopIntro->cta_label ?? 'Shop all pieces' }}
+                            <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
+                        </a>
+                    </div>
                 </div>
 
-                <div class="stagger-children grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="shop-home-grid stagger-children">
                     @foreach($products as $index => $product)
-                        <a href="{{ route('shop.show', $product) }}" class="reveal product-box group">
-                            <div class="product-box-media media-frame aspect-[3/4]">
-                                @if($product->is_featured)
-                                    <span class="product-box-tag">Featured</span>
-                                @endif
+                        <a
+                            href="{{ route('shop.show', $product) }}"
+                            class="shop-home-card reveal group {{ $index === 0 ? 'is-lead' : '' }}"
+                        >
+                            <div class="shop-home-card__media">
                                 @if($product->imageUrl())
-                                    <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="img-editorial">
+                                    <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" class="shop-home-card__image" loading="lazy">
                                 @endif
-                            </div>
-                            <div class="product-box-body">
-                                @if($product->collection)
-                                    <p class="text-[10px] uppercase tracking-[0.22em] text-mist">{{ $product->collection->name }}</p>
+                                <div class="shop-home-card__veil" aria-hidden="true"></div>
+                                @if($product->is_featured)
+                                    <span class="shop-home-card__badge">Featured</span>
                                 @endif
-                                <div class="product-box-meta">
-                                    <h3 class="font-serif text-2xl italic leading-tight text-ink transition group-hover:text-rose">{{ $product->name }}</h3>
-                                    <p class="shrink-0 pt-1 text-[12px] tracking-[0.08em] text-ink">${{ number_format($product->price, 2) }}</p>
+                                <div class="shop-home-card__meta">
+                                    <div class="flex items-end justify-between gap-3">
+                                        <div class="min-w-0">
+                                            @if($product->collection)
+                                                <p class="text-[10px] uppercase tracking-[0.22em] text-porcelain/65">{{ $product->collection->name }}</p>
+                                            @endif
+                                            <h3 class="mt-1 truncate font-serif text-xl italic text-porcelain sm:text-2xl">{{ $product->name }}</h3>
+                                        </div>
+                                        <p class="shrink-0 text-[12px] tracking-[0.08em] text-porcelain">${{ number_format($product->price, 2) }}</p>
+                                    </div>
+                                    <span class="shop-home-card__cta">View piece →</span>
                                 </div>
-                                @if($product->short_description)
-                                    <p class="text-sm leading-relaxed text-mist">{{ \Illuminate\Support\Str::limit($product->short_description, 56) }}</p>
-                                @endif
                             </div>
                         </a>
                     @endforeach
@@ -130,21 +154,21 @@
 
     {{-- Collection spreads --}}
     @if($collections->isNotEmpty())
-        <section class="section-shell mx-auto max-w-[90rem] px-5 py-24 lg:px-10 lg:py-32">
-            <div class="fade-up ornament mb-10">
+        <section class="section-shell mx-auto max-w-[90rem] px-4 py-14 sm:px-5 sm:py-20 lg:px-10 lg:py-32">
+            <div class="fade-up ornament mb-6 sm:mb-10">
                 <span class="ornament-mark text-sky">✦</span>
             </div>
-            <div class="fade-up mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div class="fade-up mb-8 flex flex-col gap-3 sm:mb-12 sm:gap-4 md:mb-16 md:flex-row md:items-end md:justify-between">
                 <div>
                     <p class="section-label">Chapters</p>
-                    <h2 class="mt-4 font-serif text-5xl italic text-ink md:text-6xl">Collections</h2>
+                    <h2 class="mt-3 font-serif text-4xl italic text-ink sm:mt-4 sm:text-5xl md:text-6xl">Collections</h2>
                 </div>
                 <a href="{{ route('collections.index') }}" class="text-[10px] uppercase tracking-[0.24em] text-mist transition hover:text-sky">
                     All seasons →
                 </a>
             </div>
 
-            <div class="stagger-children mx-auto grid max-w-5xl gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+            <div class="stagger-children mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
                 @foreach($collections as $index => $collection)
                     @php
                         $cover = $collection->cover_image
@@ -152,16 +176,16 @@
                             : null;
                     @endphp
                     <a href="{{ route('collections.show', $collection) }}" class="reveal lift-card group relative block {{ $index === 1 ? 'reveal-delay-1' : ($index === 2 ? 'reveal-delay-2' : '') }}">
-                        <div class="media-frame img-card aspect-[3/4]">
+                        <div class="media-frame img-card aspect-[3/4] shadow-pulse">
                             @if($cover)
                                 <img src="{{ $cover }}" alt="{{ $collection->name }}" class="img-editorial">
                             @endif
                             <div class="absolute inset-0 z-[1] bg-gradient-to-t from-ink/75 via-ink/10 to-transparent"></div>
-                            <div class="absolute inset-x-0 bottom-0 z-[2] p-5 md:p-6">
+                            <div class="absolute inset-x-0 bottom-0 z-[2] p-4 sm:p-5 md:p-6">
                                 @if($collection->season)
                                     <p class="text-[10px] uppercase tracking-[0.28em] text-rose">{{ $collection->season }}</p>
                                 @endif
-                                <h3 class="mt-2 font-serif text-2xl italic text-porcelain md:text-3xl">{{ $collection->name }}</h3>
+                                <h3 class="mt-2 font-serif text-xl italic text-porcelain sm:text-2xl md:text-3xl">{{ $collection->name }}</h3>
                             </div>
                         </div>
                         @if($collection->description)
@@ -284,8 +308,8 @@
                                 @php
                                     $url = str_starts_with($image, 'http') ? $image : asset('storage/'.$image);
                                 @endphp
-                                <figure class="group relative h-72 w-[70vw] shrink-0 overflow-hidden rounded-[20px] border border-[rgba(59,130,246,0.35)] shadow-[0_20px_48px_-14px_rgba(59,130,246,0.48)] sm:h-80 sm:w-[42vw] md:w-[28vw] lg:h-[22rem] lg:w-[22vw]" @if($copy === 2) aria-hidden="true" @endif>
-                                    <img src="{{ $url }}" alt="{{ $copy === 1 ? 'Studio frame '.($index + 1) : '' }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.05]">
+                                <figure class="group relative h-[17.5rem] w-[72vw] max-w-[18rem] shrink-0 overflow-hidden rounded-[20px] border border-[rgba(59,130,246,0.35)] shadow-[0_20px_48px_-14px_rgba(59,130,246,0.48)] sm:h-80 sm:w-[42vw] sm:max-w-none md:w-[28vw] lg:h-[22rem] lg:w-[22vw]" @if($copy === 2) aria-hidden="true" @endif>
+                                    <img src="{{ $url }}" alt="{{ $copy === 1 ? 'Studio frame '.($index + 1) : '' }}" class="h-full w-full object-cover object-[center_20%] transition duration-700 group-hover:scale-[1.05]">
                                     <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent opacity-80"></div>
                                     <span class="absolute bottom-4 left-4 font-display text-3xl italic text-primary">
                                         {{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}
@@ -430,12 +454,12 @@
             <div class="glow-orb-sky pointer-events-none absolute -left-20 bottom-0 h-72 w-72 opacity-25"></div>
             <div class="deco-dots opacity-40" aria-hidden="true"></div>
             <div class="relative mx-auto grid max-w-[90rem] items-center gap-10 px-5 py-16 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-24">
-                <div class="reveal order-1 mx-auto w-full max-w-sm sm:max-w-md lg:mx-0 lg:max-w-md">
-                    <div class="corner-frame img-card aspect-[3/4] overflow-hidden rounded-[22px]">
+                <div class="reveal order-1 mx-auto w-full max-w-xs sm:max-w-md lg:mx-0 lg:max-w-md">
+                    <div class="corner-frame img-card aspect-[3/4] overflow-hidden rounded-[20px] sm:rounded-[22px]">
                         @if($aboutImage)
-                            <img src="{{ $aboutImage }}" alt="" class="h-full w-full object-cover opacity-95">
+                            <img src="{{ $aboutImage }}" alt="" class="h-full w-full object-cover object-[center_18%] opacity-95">
                         @else
-                            <div class="h-full min-h-[22rem] bg-gradient-to-br from-plum to-ink"></div>
+                            <div class="h-full min-h-[18rem] bg-gradient-to-br from-plum to-ink sm:min-h-[22rem]"></div>
                         @endif
                     </div>
                 </div>

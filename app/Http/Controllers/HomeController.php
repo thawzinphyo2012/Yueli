@@ -14,6 +14,7 @@ class HomeController extends Controller
     public function index(): View
     {
         $hero = ContentBlock::query()->where('key', 'home_hero')->where('is_active', true)->first();
+        $shopIntro = ContentBlock::query()->where('key', 'home_shop')->where('is_active', true)->first();
         $about = ContentBlock::query()->where('key', 'home_about')->where('is_active', true)->first();
         $studioIntro = ContentBlock::query()->where('key', 'portfolio_intro')->where('is_active', true)->first();
 
@@ -46,6 +47,7 @@ class HomeController extends Controller
 
         return view('storefront.home', compact(
             'hero',
+            'shopIntro',
             'about',
             'studioIntro',
             'collections',
